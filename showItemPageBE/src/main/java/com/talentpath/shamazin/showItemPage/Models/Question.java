@@ -27,7 +27,7 @@ public class Question {
 
     public Question(Question that){
         this.questionId = that.questionId;
-        this.itemId = that.questionId;
+        this.itemId = that.itemId;
         this.userId = that.userId;
         this.question = that.question;
         this.votes = that.votes;
