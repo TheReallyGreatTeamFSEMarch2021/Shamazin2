@@ -1,4 +1,4 @@
-package com.talentpath.shamazin.showItemPage.Models;
+package com.talentpath.shamazin.showItemPage.models;
 
 import javax.persistence.*;
 import java.time.LocalDate;
