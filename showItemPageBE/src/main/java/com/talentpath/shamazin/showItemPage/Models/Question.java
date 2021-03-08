@@ -81,4 +81,31 @@ public class Question {
     public void setDate(LocalDate date) {
         this.date = date;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Question question1 = (Question) o;
+
+        if (questionId != null ? !questionId.equals(question1.questionId) : question1.questionId != null) return false;
+        if (itemId != null ? !itemId.equals(question1.itemId) : question1.itemId != null) return false;
+        if (userId != null ? !userId.equals(question1.userId) : question1.userId != null) return false;
+        if (question != null ? !question.equals(question1.question) : question1.question != null) return false;
+        if (votes != null ? !votes.equals(question1.votes) : question1.votes != null) return false;
+        return date != null ? date.equals(question1.date) : question1.date == null;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = questionId != null ? questionId.hashCode() : 0;
+        result = 31 * result + (itemId != null ? itemId.hashCode() : 0);
+        result = 31 * result + (userId != null ? userId.hashCode() : 0);
+        result = 31 * result + (question != null ? question.hashCode() : 0);
+        result = 31 * result + (votes != null ? votes.hashCode() : 0);
+        result = 31 * result + (date != null ? date.hashCode() : 0);
+        return result;
+    }
+
 }
