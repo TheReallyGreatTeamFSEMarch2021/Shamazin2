@@ -1,0 +1,84 @@
+package com.talentpath.shamazin.showItemPage.Models;
+
+import javax.persistence.*;
+import java.time.LocalDate;
+
+@Entity
+@Table(name="questions")
+public class Question {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer questionId; // Creates a unique id for each question asked in the DB
+
+    private Integer itemId;     // Associate the question to a particular item/product
+
+    private Integer userId;     // Associate the question with a user / confirmed buyer
+
+    private String question;    // The question that will be displayed to the user
+
+    private Integer votes;      // To store the number of up/downvotes a question receives
+
+    private LocalDate date;     // Store the date of when the question was asked
+
+    public Question(){
+
+    }
+
+    public Question(Question that){
+        this.questionId = that.questionId;
+        this.itemId = that.questionId;
+        this.userId = that.userId;
+        this.question = that.question;
+        this.votes = that.votes;
+        this.date = that.date;
+    }
+
+    public Integer getQuestionId() {
+        return questionId;
+    }
+
+    public void setQuestionId(Integer questionId) {
+        this.questionId = questionId;
+    }
+
+    public Integer getItemId() {
+        return itemId;
+    }
+
+    public void setItemId(Integer itemId) {
+        this.itemId = itemId;
+    }
+
+    public Integer getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Integer userId) {
+        this.userId = userId;
+    }
+
+    public String getQuestion() {
+        return question;
+    }
+
+    public void setQuestion(String question) {
+        this.question = question;
+    }
+
+    public Integer getVotes() {
+        return votes;
+    }
+
+    public void setVotes(Integer votes) {
+        this.votes = votes;
+    }
+
+    public LocalDate getDate() {
+        return date;
+    }
+
+    public void setDate(LocalDate date) {
+        this.date = date;
+    }
+}
