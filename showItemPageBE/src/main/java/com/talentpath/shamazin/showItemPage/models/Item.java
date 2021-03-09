@@ -36,6 +36,14 @@ public class Item {
     @NotBlank
     private Boolean isPrimeEligible;
 
+    public List<ProductPhoto> getProductPhotos() {
+        return productPhotos;
+    }
+
+    public void setProductPhotos(List<ProductPhoto> productPhotos) {
+        this.productPhotos = productPhotos;
+    }
+
     public Integer getId() {
         return id;
     }
