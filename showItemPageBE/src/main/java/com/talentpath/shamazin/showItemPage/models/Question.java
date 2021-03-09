@@ -1,10 +1,10 @@
-package com.talentpath.shamazin.showItemPage.Models;
+package com.talentpath.shamazin.showItemPage.models;
 
 import javax.persistence.*;
 import java.time.LocalDate;
 
 @Entity
-@Table(name="questions")
+@Table(name="Questions")
 public class Question {
 
     @Id
