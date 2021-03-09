@@ -25,9 +25,6 @@ public class Item {
     private String name;
 
     @NotBlank
-    private String brand;
-
-    @NotBlank
     private Double price;
 
     @NotBlank
@@ -66,14 +63,6 @@ public class Item {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public String getBrand() {
-        return brand;
-    }
-
-    public void setBrand(String brand) {
-        this.brand = brand;
     }
 
     public Double getPrice() {

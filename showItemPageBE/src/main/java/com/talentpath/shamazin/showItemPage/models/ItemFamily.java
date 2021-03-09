@@ -18,6 +18,16 @@ public class ItemFamily {
     @OneToMany(mappedBy="itemFamily", cascade=CascadeType.ALL)
     private List<Item> items;
 
+    @NotBlank
+    private String brand;
+
+    public String getBrand() {
+        return brand;
+    }
+
+    public void setBrand(String brand) {
+        this.brand = brand;
+    }
 
     public Integer getId() {
         return id;
