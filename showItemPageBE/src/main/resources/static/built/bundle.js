@@ -28658,7 +28658,7 @@ var Shamazin = /*#__PURE__*/function (_React$Component) {
   _createClass(Shamazin, [{
     key: "render",
     value: function render() {
-      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, "HELLO SHAMAZIN ITEM COMPONENT!!!!", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, "HELLO SHAMAZIN ITEM COMPONENT!!!!HELLO", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
         src: "https://upload.wikimedia.org/wikipedia/commons/d/de/Amazon_icon.png"
       }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_TestChildComponent_jsx__WEBPACK_IMPORTED_MODULE_1__["default"], {
         passedProp: this.state.title

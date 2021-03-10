@@ -12,7 +12,7 @@ class Shamazin extends React.Component{
     render(){
         return(
             <div>
-                HELLO SHAMAZIN ITEM COMPONENT!!!!
+                HELLO SHAMAZIN ITEM COMPONENT!!!!HELLO
                 <img src="https://upload.wikimedia.org/wikipedia/commons/d/de/Amazon_icon.png"/>
                 <br/>
                 <br/>
