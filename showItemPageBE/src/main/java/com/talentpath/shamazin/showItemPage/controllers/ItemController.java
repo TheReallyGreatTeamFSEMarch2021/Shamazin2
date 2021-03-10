@@ -9,7 +9,7 @@ import java.util.List;
 
 @RestController
 @CrossOrigin
-@RequestMapping("/api")
+@RequestMapping("/api/item")
 public class ItemController {
     @Autowired
     ItemService service;
@@ -18,5 +18,6 @@ public class ItemController {
     public List<Item> getAllItems() {
         return service.getAllItems();
     }
+
 
 }
