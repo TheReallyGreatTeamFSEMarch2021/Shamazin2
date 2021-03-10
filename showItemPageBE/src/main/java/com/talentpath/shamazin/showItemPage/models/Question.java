@@ -1,7 +1,11 @@
 package com.talentpath.shamazin.showItemPage.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import java.time.LocalDate;
+import java.util.List;
 
 @Entity
 @Table(name="Questions")
@@ -20,6 +24,14 @@ public class Question {
     private Integer votes;      // To store the number of up/downvotes a question receives
 
     private LocalDate date;     // Store the date of when the question was asked
+
+    @JsonIgnore
+    @ManyToOne(fetch=FetchType.LAZY)
+    @NotBlank
+    private ItemFamily itemFamily;
+
+    @OneToMany(mappedBy = "question", cascade=CascadeType.ALL)
+    private List<Answer> answers;
 
     public Question(){
 
@@ -94,7 +106,8 @@ public class Question {
         if (userId != null ? !userId.equals(question1.userId) : question1.userId != null) return false;
         if (question != null ? !question.equals(question1.question) : question1.question != null) return false;
         if (votes != null ? !votes.equals(question1.votes) : question1.votes != null) return false;
-        return date != null ? date.equals(question1.date) : question1.date == null;
+        if (date != null ? !date.equals(question1.date) : question1.date != null) return false;
+        return itemFamily != null ? itemFamily.equals(question1.itemFamily) : question1.itemFamily == null;
     }
 
     @Override
@@ -105,7 +118,7 @@ public class Question {
         result = 31 * result + (question != null ? question.hashCode() : 0);
         result = 31 * result + (votes != null ? votes.hashCode() : 0);
         result = 31 * result + (date != null ? date.hashCode() : 0);
+        result = 31 * result + (itemFamily != null ? itemFamily.hashCode() : 0);
         return result;
     }
-
 }
