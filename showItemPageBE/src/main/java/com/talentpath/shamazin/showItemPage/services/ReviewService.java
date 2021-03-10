@@ -13,4 +13,8 @@ public class ReviewService {
     ReviewRepository reviewDao;
 
     public List<Review> getAllReviews() {return reviewDao.findAll();}
+
+    public List<Review> getByItemFamily(Integer itemFamilyId) {
+        return reviewDao.findByItemFamilyId(itemFamilyId);
+    }
 }
