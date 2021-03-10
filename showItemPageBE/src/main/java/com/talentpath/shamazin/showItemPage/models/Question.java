@@ -30,7 +30,7 @@ public class Question {
     @NotBlank
     private ItemFamily itemFamily;
 
-    @OneToMany(mappedBy = "answer", cascade=CascadeType.ALL)
+    @OneToMany(mappedBy = "question", cascade=CascadeType.ALL)
     private List<Answer> answers;
 
     public Question(){

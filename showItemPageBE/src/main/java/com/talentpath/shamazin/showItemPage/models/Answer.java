@@ -21,7 +21,7 @@ public class Answer {
     private LocalDate date;
 
     @JsonIgnore
-    @ManyToOne
+    @ManyToOne(fetch=FetchType.LAZY)
     @NotBlank
     private Question question;      // Associate the answer with a question
 

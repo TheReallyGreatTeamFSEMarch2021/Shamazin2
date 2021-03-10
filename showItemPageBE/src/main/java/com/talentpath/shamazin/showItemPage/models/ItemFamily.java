@@ -18,6 +18,9 @@ public class ItemFamily {
     @OneToMany(mappedBy="itemFamily", cascade=CascadeType.ALL)
     private List<Item> items;
 
+    @OneToMany(mappedBy = "itemFamily", cascade=CascadeType.ALL)
+    private List<Question> questions;
+
     @NotBlank
     private String brand;
 
