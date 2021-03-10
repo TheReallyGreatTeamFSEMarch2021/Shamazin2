@@ -1,6 +1,9 @@
 package com.talentpath.shamazin.showItemPage.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import java.time.LocalDate;
 
 @Entity
@@ -20,6 +23,11 @@ public class Question {
     private Integer votes;      // To store the number of up/downvotes a question receives
 
     private LocalDate date;     // Store the date of when the question was asked
+
+    @JsonIgnore
+    @ManyToOne(fetch=FetchType.LAZY)
+    @NotBlank 
+    private ItemFamily itemFamily;
 
     public Question(){
 

@@ -21,6 +21,9 @@ public class Item {
     @OneToMany(mappedBy="item", cascade=CascadeType.ALL)
     private List<ProductPhoto> productPhotos;
 
+    @OneToMany(mappedBy = "question", cascade=CascadeType.ALL)
+    private List<Question> questions;
+
     @NotBlank
     private String name;
 
