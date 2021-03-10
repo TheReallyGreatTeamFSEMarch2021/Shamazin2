@@ -26,7 +26,7 @@ public class Question {
 
     @JsonIgnore
     @ManyToOne(fetch=FetchType.LAZY)
-    @NotBlank 
+    @NotBlank
     private ItemFamily itemFamily;
 
     public Question(){
