@@ -1,6 +1,7 @@
 package com.talentpath.shamazin.showItemPage.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -9,13 +10,14 @@ import java.util.Objects;
 
 @Entity
 @Table(name="Items")
+@JsonIgnoreProperties({"hibernateLazyInitializer","handler"})
 public class Item {
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Integer id;
 
     @JsonIgnore
-    @ManyToOne(fetch=FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     @NotBlank
     private ItemFamily itemFamily;
 
