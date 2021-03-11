@@ -3,6 +3,7 @@ package com.talentpath.shamazin.showItemPage.models;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 @Table(name="ItemFamilies")
@@ -69,5 +70,18 @@ public class ItemFamily {
 
     public ItemFamily() {
 
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        ItemFamily family = (ItemFamily) o;
+        return familyName.equals(family.familyName) && Objects.equals(items, family.items) && Objects.equals(questions, family.questions) && Objects.equals(reviews, family.reviews) && brand.equals(family.brand);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(familyName, items, questions, reviews, brand);
     }
 }
