@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 @Table(name="Items")
@@ -89,5 +90,29 @@ public class Item {
         isPrimeEligible = primeEligible;
     }
 
+    public Item() {
 
+    }
+
+    public Item(@NotBlank ItemFamily itemFamily, List<ProductPhoto> productPhotos, @NotBlank String name, @NotBlank Double price, @NotBlank Integer stockRemaining, @NotBlank Boolean isPrimeEligible) {
+        this.itemFamily = itemFamily;
+        this.productPhotos = productPhotos;
+        this.name = name;
+        this.price = price;
+        this.stockRemaining = stockRemaining;
+        this.isPrimeEligible = isPrimeEligible;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Item item = (Item) o;
+        return itemFamily.equals(item.itemFamily) && Objects.equals(productPhotos, item.productPhotos) && name.equals(item.name) && price.equals(item.price) && stockRemaining.equals(item.stockRemaining) && isPrimeEligible.equals(item.isPrimeEligible);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(itemFamily, productPhotos, name, price, stockRemaining, isPrimeEligible);
+    }
 }
