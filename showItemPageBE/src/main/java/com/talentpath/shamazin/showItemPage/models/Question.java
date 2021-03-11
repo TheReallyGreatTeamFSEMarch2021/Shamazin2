@@ -30,8 +30,24 @@ public class Question {
     @NotBlank
     private ItemFamily itemFamily;
 
-    @OneToMany(mappedBy = "question", cascade=CascadeType.ALL)
+    @OneToMany(mappedBy="question", cascade=CascadeType.ALL)
     private List<Answer> answers;
+
+    public ItemFamily getItemFamily() {
+        return itemFamily;
+    }
+
+    public void setItemFamily(ItemFamily itemFamily) {
+        this.itemFamily = itemFamily;
+    }
+
+    public List<Answer> getAnswers() {
+        return answers;
+    }
+
+    public void setAnswers(List<Answer> answers) {
+        this.answers = answers;
+    }
 
     public Question(){
 
