@@ -28636,7 +28636,7 @@ function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Re
 function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
 
 
-
+ // import Client from 'client';
 
 var Shamazin = /*#__PURE__*/function (_React$Component) {
   _inherits(Shamazin, _React$Component);
@@ -28650,15 +28650,23 @@ var Shamazin = /*#__PURE__*/function (_React$Component) {
 
     _this = _super.call(this, props);
     _this.state = {
-      title: "ORIGINAL TITLE IN SHAMAZIN PARENT COMPONENT"
+      title: "ORIGINAL TITLE IN SHAMAZIN PARENT COMPONENT",
+      photoURL: ""
     };
     return _this;
   }
 
   _createClass(Shamazin, [{
+    key: "componentDidMount",
+    value: function componentDidMount() {//         $.ajax({
+      //             method: 'GET',
+      //             url: 'api/productPhotos/3'
+      //         })
+    }
+  }, {
     key: "render",
     value: function render() {
-      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, "HELLO SHAMAZIN ITEM COMPONENT!!!!HELLO", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, "HELLO SHAMAZIN ITEM COMPONENT!!!!HELLO PRODUCT TITLE: ", this.state.photoURL, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
         src: "https://upload.wikimedia.org/wikipedia/commons/d/de/Amazon_icon.png"
       }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_TestChildComponent_jsx__WEBPACK_IMPORTED_MODULE_1__["default"], {
         passedProp: this.state.title

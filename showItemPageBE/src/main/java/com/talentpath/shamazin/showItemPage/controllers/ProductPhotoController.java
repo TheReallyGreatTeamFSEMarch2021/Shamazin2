@@ -25,7 +25,6 @@ public class ProductPhotoController {
     public List<ProductPhoto> getProductPhotos(@PathVariable Integer itemID){
         Item item = itemService.findByItemID(itemID);
         System.out.println(item.getName());
-
         return productPhotoServ.getProductPhotosByItsItem(item);
     }
 
