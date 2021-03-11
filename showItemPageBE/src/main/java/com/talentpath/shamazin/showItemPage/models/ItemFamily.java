@@ -59,5 +59,15 @@ public class ItemFamily {
         this.items = items;
     }
 
+    public ItemFamily(@NotBlank String familyName, List<Item> items, List<Question> questions, List<Review> reviews, @NotBlank String brand) {
+        this.familyName = familyName;
+        this.items = items;
+        this.questions = questions;
+        this.reviews = reviews;
+        this.brand = brand;
+    }
 
+    public ItemFamily() {
+
+    }
 }
