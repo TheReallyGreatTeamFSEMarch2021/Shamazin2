@@ -19,7 +19,7 @@ public class ReviewController {
         return service.getAllReviews();
     }
 
-    @GetMapping("getByItemFamily/{itemFamily}")
+    @GetMapping("/getByItemFamily/{itemFamily}")
     public List<Review> getByItemFamily(@PathVariable Integer itemFamily){
         return service.getByItemFamily(itemFamily);
     }

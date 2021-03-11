@@ -1,13 +1,20 @@
 package com.talentpath.shamazin.showItemPage.services;
 
+import com.talentpath.shamazin.showItemPage.exceptions.NoSuchItemException;
 import com.talentpath.shamazin.showItemPage.models.Item;
 import com.talentpath.shamazin.showItemPage.models.ItemFamily;
+import com.talentpath.shamazin.showItemPage.daos.ItemFamilyRepository;
+import com.talentpath.shamazin.showItemPage.daos.ItemRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.data.cassandra.AutoConfigureDataCassandra;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 import java.util.List;
 import java.util.Optional;
@@ -29,6 +36,7 @@ class ItemServiceTest {
     }
 
     @Test
+    @Transactional
     void getAllItems() {
         Item item = new Item();
         item.setName("Testing get all");
@@ -45,8 +53,14 @@ class ItemServiceTest {
         item.setId(1);
         item.setName("Jesse test");
         Integer id = itemServe.addItem(item).getId();
-        Item addedItem = itemServe.getItem(id);
-        assertEquals("Jesse test",addedItem.getName());
+        Item addedItem = null;
+        try {
+            addedItem = itemServe.getItem(id);
+            assertEquals("Jesse test",addedItem.getName());
+        } catch (NoSuchItemException e) {
+            fail("Exception caught during golden path test");
+        }
+
     }
 
 

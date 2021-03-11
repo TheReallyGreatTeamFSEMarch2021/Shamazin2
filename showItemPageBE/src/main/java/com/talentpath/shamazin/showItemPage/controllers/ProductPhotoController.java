@@ -1,6 +1,7 @@
 package com.talentpath.shamazin.showItemPage.controllers;
 
 
+import com.talentpath.shamazin.showItemPage.exceptions.NoSuchItemException;
 import com.talentpath.shamazin.showItemPage.models.Item;
 import com.talentpath.shamazin.showItemPage.models.ProductPhoto;
 import com.talentpath.shamazin.showItemPage.services.ItemService;
@@ -22,10 +23,8 @@ public class ProductPhotoController {
     ProductPhotoService productPhotoServ;
 
     @GetMapping("/productPhotosForItem/{itemID}")
-    public List<ProductPhoto> getProductPhotos(@PathVariable Integer itemID){
+    public List<ProductPhoto> getProductPhotos(@PathVariable Integer itemID) throws NoSuchItemException {
         Item item = itemService.getItem(itemID);
-        System.out.println(item.getName());
-
         return productPhotoServ.getProductPhotosByItsItem(item);
     }
 
