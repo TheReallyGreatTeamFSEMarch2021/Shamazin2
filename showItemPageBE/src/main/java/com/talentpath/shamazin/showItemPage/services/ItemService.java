@@ -1,6 +1,7 @@
 package com.talentpath.shamazin.showItemPage.services;
 
 
+
 import com.talentpath.shamazin.showItemPage.daos.ItemRepository;
 import com.talentpath.shamazin.showItemPage.models.Item;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,4 +29,5 @@ public class ItemService {
         }
         return item.get();
     }
+
 }
