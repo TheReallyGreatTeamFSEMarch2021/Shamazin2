@@ -23,6 +23,7 @@ public class ReviewService {
     public Review getById(Integer id) throws NullReviewException {
         Optional<Review> review  = reviewDao.findById(id);
 
+        //check if review exists, if not throw exception
         if(review.isPresent()){
             return review.get();
         }else{
