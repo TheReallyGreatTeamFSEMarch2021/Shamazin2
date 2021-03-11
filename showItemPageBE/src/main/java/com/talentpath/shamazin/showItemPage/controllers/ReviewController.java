@@ -1,5 +1,6 @@
 package com.talentpath.shamazin.showItemPage.controllers;
 
+import com.talentpath.shamazin.showItemPage.exceptions.NullReviewException;
 import com.talentpath.shamazin.showItemPage.models.Review;
 import com.talentpath.shamazin.showItemPage.services.ReviewService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +27,7 @@ public class ReviewController {
     }
 
     @GetMapping("/getById/{id}")
-    public Review getById(@PathVariable Integer id){
+    public Review getById(@PathVariable Integer id) throws NullReviewException {
         return service.getById(id);
     }
 }

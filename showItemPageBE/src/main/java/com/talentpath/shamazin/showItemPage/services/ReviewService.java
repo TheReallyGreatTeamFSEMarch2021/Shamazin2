@@ -1,6 +1,7 @@
 package com.talentpath.shamazin.showItemPage.services;
 
 import com.talentpath.shamazin.showItemPage.daos.ReviewRepository;
+import com.talentpath.shamazin.showItemPage.exceptions.NullReviewException;
 import com.talentpath.shamazin.showItemPage.models.Review;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,7 +20,13 @@ public class ReviewService {
         return reviewDao.findByItemFamilyId(itemFamilyId);
     }
 
-    public Review getById(Integer id) {
-        return reviewDao.findById(id).get();
+    public Review getById(Integer id) throws NullReviewException {
+        Optional<Review> review  = reviewDao.findById(id);
+
+        if(review.isPresent()){
+            return review.get();
+        }else{
+            throw new NullReviewException("No review found with id: "+id);
+        }
     }
 }
