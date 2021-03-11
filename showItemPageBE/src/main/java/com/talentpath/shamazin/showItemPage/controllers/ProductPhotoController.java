@@ -23,7 +23,7 @@ public class ProductPhotoController {
 
     @GetMapping("/productPhotosForItem/{itemID}")
     public List<ProductPhoto> getProductPhotos(@PathVariable Integer itemID){
-        Item item = itemService.findByItemID(itemID);
+        Item item = itemService.getItem(itemID);
         System.out.println(item.getName());
 
         return productPhotoServ.getProductPhotosByItsItem(item);
