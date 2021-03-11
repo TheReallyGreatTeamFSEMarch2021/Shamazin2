@@ -1,5 +1,6 @@
 package com.talentpath.shamazin.showItemPage.controllers;
 
+import com.talentpath.shamazin.showItemPage.exceptions.NoSuchItemException;
 import com.talentpath.shamazin.showItemPage.exceptions.NoSuchItemFamilyException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -13,6 +14,12 @@ public class ErrorHandler {
     @ExceptionHandler(value = NoSuchItemFamilyException.class)
     @ResponseStatus(code = HttpStatus.BAD_REQUEST)
     public String errorMessageOnNoSuchItemFamilyException(NoSuchItemFamilyException ex, WebRequest request) {
+        return request.toString() + ": an error occurred: " + ex.getMessage();
+    }
+
+    @ExceptionHandler(value = NoSuchItemException.class)
+    @ResponseStatus(code = HttpStatus.BAD_REQUEST)
+    public String errorMessageOnNoSuchItemException(NoSuchItemException ex, WebRequest request) {
         return request.toString() + ": an error occurred: " + ex.getMessage();
     }
 

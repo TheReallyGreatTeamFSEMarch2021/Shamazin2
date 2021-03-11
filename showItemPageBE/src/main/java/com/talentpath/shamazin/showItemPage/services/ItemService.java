@@ -3,6 +3,7 @@ package com.talentpath.shamazin.showItemPage.services;
 
 
 import com.talentpath.shamazin.showItemPage.daos.ItemRepository;
+import com.talentpath.shamazin.showItemPage.exceptions.NoSuchItemException;
 import com.talentpath.shamazin.showItemPage.models.Item;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,14 +21,10 @@ public class ItemService {
         return itemDao.findAll();
     }
 
-    public Item findByItemID(Integer itemID) {
+    public Item findByItemID(Integer itemID) throws NoSuchItemException {
         Optional<Item> item =itemDao.findById(itemID);
-        try{
-            item.get();
-        }catch(NoSuchElementException ex){
-            System.out.println("No user with that ID");
-        }
-        return item.get();
+        if(item.isPresent()) return item.get();
+        else throw new NoSuchItemException("No item with id: " + itemID);
     }
 
 }
