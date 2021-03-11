@@ -1,7 +1,12 @@
 package com.talentpath.shamazin.showItemPage.services;
 
+<<<<<<< HEAD
 import com.talentpath.shamazin.showItemPage.models.Item;
 import com.talentpath.shamazin.showItemPage.models.ItemFamily;
+=======
+import com.talentpath.shamazin.showItemPage.daos.ItemFamilyRepository;
+import com.talentpath.shamazin.showItemPage.daos.ItemRepository;
+>>>>>>> working through reset method for unit testing
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -22,11 +27,23 @@ class ItemServiceTest {
 
     @Autowired
     ItemService itemServe;
+<<<<<<< HEAD
     ItemFamilyService itemFamilyServe;
 
     @BeforeEach
     void deleteAllItems() {
         itemFamilyServe.truncateItemFamily();
+=======
+    @Autowired
+    ItemRepository itemDao;
+    @Autowired
+    ItemFamilyRepository itemFamilyDao;
+    @Autowired
+    ItemFamilyService itemFamilyService;
+    @BeforeEach
+    void setUp() {
+        itemFamilyService.truncateItemFamily();
+>>>>>>> working through reset method for unit testing
     }
 
     @Test
