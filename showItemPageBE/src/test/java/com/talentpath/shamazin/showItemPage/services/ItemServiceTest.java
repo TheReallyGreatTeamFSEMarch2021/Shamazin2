@@ -21,10 +21,11 @@ class ItemServiceTest {
 
     @Autowired
     ItemService itemServe;
+    ItemFamilyService itemFamilyServe;
 
     @BeforeEach
     void deleteAllItems() {
-        itemServe.deleteAllRows();
+        itemFamilyServe.truncateItemFamily();
     }
 
     @Test

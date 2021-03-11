@@ -37,14 +37,6 @@ public class ItemService {
         BeanUtils.copyProperties(item,current,"id");
         return itemDao.saveAndFlush(current);
     }
-    //Used to reset the database for testing
-    //If theres a more efficient way let me know =) -Jesse
-    public void deleteAllRows() {
-        List<Item> items = this.getAllItems();
-        for (int i = 0;i<items.size();++i) {
-            Integer id = items.get(i).getId();
-            this.deleteItem(id);
-        }
-    }
+
 
 }
