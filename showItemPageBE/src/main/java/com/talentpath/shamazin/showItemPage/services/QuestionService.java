@@ -14,9 +14,7 @@ public class QuestionService {
 
     public List<Question> getAllQuestions() {return questionDao.findAll();}
 
-    public Question getQuestionById(Integer qId){
-        return questionDao.findById(qId).get();
-    }
+    public Question getQuestionById(Integer qId){ return questionDao.findById(qId).get(); }
 
     public Question addQuestion(Question toAdd){return questionDao.saveAndFlush(toAdd);}
 
