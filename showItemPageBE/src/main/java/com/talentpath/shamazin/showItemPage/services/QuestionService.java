@@ -13,4 +13,14 @@ public class QuestionService {
     QuestionRepository questionDao;
 
     public List<Question> getAllQuestions() {return questionDao.findAll();}
+
+    public Question getQuestionById(Integer qId){
+        return questionDao.findById(qId).get();
+    }
+
+    public Question addQuestion(Question toAdd){return questionDao.saveAndFlush(toAdd);}
+
+    public Question editQuestion(Question edited){return questionDao.saveAndFlush(edited);}
+
+    public void deleteQuestion(Integer qId){questionDao.deleteById(qId);}
 }
