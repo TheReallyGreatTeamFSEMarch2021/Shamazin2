@@ -21,5 +21,5 @@ public class AnswerService {
 
     public Answer editAnswer(Answer edited){return repo.saveAndFlush(edited);}
 
-    public void deleteAnswer(Integer aId){repo.deleteById(aId);} 
+    public void deleteAnswer(Integer aId){repo.deleteById(aId);}
 }
