@@ -12,7 +12,7 @@ public interface ItemFamilyRepository extends JpaRepository<ItemFamily,Integer> 
 
     @Modifying
     @Query(
-            value = "truncate item_families restart identity",
+            value = "truncate item_families restart identity cascade",
             nativeQuery = true
     )
     void truncateItem_Family();
