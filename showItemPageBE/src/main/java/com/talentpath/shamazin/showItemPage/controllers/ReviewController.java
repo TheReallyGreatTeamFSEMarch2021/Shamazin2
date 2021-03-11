@@ -25,7 +25,7 @@ public class ReviewController {
         return service.getByItemFamily(itemFamily);
     }
 
-    @GetMapping("getById/{id}")
+    @GetMapping("/getById/{id}")
     public Review getById(@PathVariable Integer id){
         return service.getById(id);
     }
