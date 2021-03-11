@@ -19,7 +19,7 @@ public class ReviewService {
         return reviewDao.findByItemFamilyId(itemFamilyId);
     }
 
-    public Optional<Review> getById(Integer id) {
-        return reviewDao.findById(id);
+    public Review getById(Integer id) {
+        return reviewDao.findById(id).get();
     }
 }

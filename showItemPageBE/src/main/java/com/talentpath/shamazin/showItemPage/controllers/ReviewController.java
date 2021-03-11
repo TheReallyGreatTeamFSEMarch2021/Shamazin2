@@ -26,7 +26,7 @@ public class ReviewController {
     }
 
     @GetMapping("getById/{id}")
-    public Optional<Review> getById(@PathVariable Integer id){
+    public Review getById(@PathVariable Integer id){
         return service.getById(id);
     }
 }
