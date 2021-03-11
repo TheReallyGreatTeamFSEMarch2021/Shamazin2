@@ -1,5 +1,6 @@
 package com.talentpath.shamazin.showItemPage.services;
 
+import com.talentpath.shamazin.showItemPage.exceptions.NoSuchItemException;
 import com.talentpath.shamazin.showItemPage.models.Item;
 import com.talentpath.shamazin.showItemPage.models.ItemFamily;
 import com.talentpath.shamazin.showItemPage.daos.ItemFamilyRepository;
@@ -52,8 +53,14 @@ class ItemServiceTest {
         item.setId(1);
         item.setName("Jesse test");
         Integer id = itemServe.addItem(item).getId();
-        Item addedItem = itemServe.getItem(id);
-        assertEquals("Jesse test",addedItem.getName());
+        Item addedItem = null;
+        try {
+            addedItem = itemServe.getItem(id);
+            assertEquals("Jesse test",addedItem.getName());
+        } catch (NoSuchItemException e) {
+            fail("Exception caught during golden path test");
+        }
+
     }
 
 

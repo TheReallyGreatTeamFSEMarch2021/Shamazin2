@@ -28,9 +28,10 @@ public class ItemService {
         itemDao.deleteById(id);
     }
 
-    public Item getItem(Integer id) {
-
-        return itemDao.findById(id).get();
+    public Item getItem(Integer id) throws NoSuchItemException {
+        Optional<Item> item = itemDao.findById(id);
+        if(item.isPresent()) return item.get();
+        else throw new NoSuchItemException("No item with id: " + id);
     }
 
     public Item editItem(Item item, Integer id) {
