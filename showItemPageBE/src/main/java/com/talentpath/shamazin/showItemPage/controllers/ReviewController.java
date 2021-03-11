@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @CrossOrigin
@@ -22,5 +23,10 @@ public class ReviewController {
     @GetMapping("/getByItemFamily/{itemFamily}")
     public List<Review> getByItemFamily(@PathVariable Integer itemFamily){
         return service.getByItemFamily(itemFamily);
+    }
+
+    @GetMapping("getById/{id}")
+    public Optional<Review> getById(@PathVariable Integer id){
+        return service.getById(id);
     }
 }

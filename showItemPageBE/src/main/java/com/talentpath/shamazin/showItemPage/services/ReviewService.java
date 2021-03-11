@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ReviewService {
@@ -16,5 +17,9 @@ public class ReviewService {
 
     public List<Review> getByItemFamily(Integer itemFamilyId) {
         return reviewDao.findByItemFamilyId(itemFamilyId);
+    }
+
+    public Optional<Review> getById(Integer id) {
+        return reviewDao.findById(id);
     }
 }
