@@ -31,6 +31,14 @@ public class Review {
 
     }
 
+    public Review(ItemFamily itemFamily, String title, String content, Integer score, Integer starValue){
+        this.itemFamily = itemFamily;
+        this.title = title;
+        this.content = content;
+        this.score = score;
+        this.starValue = starValue;
+    }
+
     public Review(Review review){
         this.id = review.id;
         this.itemFamily = review.itemFamily;
