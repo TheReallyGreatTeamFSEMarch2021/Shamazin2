@@ -99,15 +99,6 @@ public class Item {
 
     }
 
-    public Item(@NotBlank ItemFamily itemFamily, List<ProductPhoto> productPhotos, @NotBlank String name, @NotBlank Double price, @NotBlank Integer stockRemaining, @NotBlank Boolean isPrimeEligible) {
-        this.itemFamily = itemFamily;
-        this.productPhotos = productPhotos;
-        this.name = name;
-        this.price = price;
-        this.stockRemaining = stockRemaining;
-        this.isPrimeEligible = isPrimeEligible;
-    }
-
     public Item(@NotBlank ItemFamily itemFamily, List<ProductPhoto> productPhotos, List<Property> properties, @NotBlank String name, @NotBlank Double price, @NotBlank Integer stockRemaining, @NotBlank Boolean isPrimeEligible) {
         this.itemFamily = itemFamily;
         this.productPhotos = productPhotos;
