@@ -10,6 +10,7 @@ import java.util.Objects;
 @Table(name="properties")
 public class Property {
     @Id
+    @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Integer id;
     private String name;
     private String value;
