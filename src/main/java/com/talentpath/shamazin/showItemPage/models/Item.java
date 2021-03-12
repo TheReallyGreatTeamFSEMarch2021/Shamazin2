@@ -29,13 +29,13 @@ public class Item {
     @ManyToMany(fetch=FetchType.LAZY)
     @JoinTable(
             name="RelatedBoughtItems",
-            joinColumns={@JoinColumn(name="boughtItemId")},
+            joinColumns={@JoinColumn(name="itemId")},
             inverseJoinColumns={@JoinColumn(name="relatedBoughtItemId")})
     private Set<Item> relatedBoughtItems;
 
     @JsonIgnore
     @ManyToMany(mappedBy="relatedBoughtItems")
-    private Set<Item> boughtItems;
+    private Set<Item> items;
 
     @NotBlank
     private String name;
@@ -109,9 +109,9 @@ public class Item {
 
     public void setRelatedBoughtItems(Set<Item> relatedBoughtItems) { this.relatedBoughtItems = relatedBoughtItems; }
 
-    public Set<Item> getBoughtItems() { return boughtItems; }
+    public Set<Item> getItems() { return items; }
 
-    public void setBoughtItems(Set<Item> boughtItems) { this.boughtItems = boughtItems; }
+    public void setItems(Set<Item> items) { this.items = items; }
 
     public Item() { }
 
