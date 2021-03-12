@@ -25,5 +25,10 @@ public class ItemController {
         return service.getItem(id);
     }
 
+    @GetMapping("/getByFamilyId/{familyId}")
+    public List<Item> getItemsByFamilyId(@PathVariable Integer familyId) {
+        return service.findByFamilyId(familyId);
+    }
+
 
 }
