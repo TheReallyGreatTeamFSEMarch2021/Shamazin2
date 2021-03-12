@@ -23,7 +23,7 @@ public class RelatedBoughtItemService {
 
         Item item = boughtItem.get();
         relatedBoughtItems.addAll(item.getRelatedBoughtItems());
-        relatedBoughtItems.addAll(item.getItems());
+        relatedBoughtItems.addAll(item.getRelatedItems());
 
         return relatedBoughtItems;
     }
