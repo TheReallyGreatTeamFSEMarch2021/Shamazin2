@@ -78,8 +78,8 @@ class ItemServiceTest {
         ItemFamily doll = new ItemFamily("Doll XPS 13",null,null,null,"Doll");
         ItemFamily shamazinBasics = new ItemFamily("ShamazinBasics T-Shirt",null,null,null,"ShamazinBasics");
 
-        Item dollxps13 = new Item(doll,null,"Doll XPS 13 7450",1300D,50,true);
-        Item shamazinBasicsRedShirt = new Item(shamazinBasics,null,"Shamazin Basics T-Shirt (Red)",15D,200,true);
+        Item dollxps13 = new Item(doll,null,null,"Doll XPS 13 7450",1300D,50,true);
+        Item shamazinBasicsRedShirt = new Item(shamazinBasics,null,null,"Shamazin Basics T-Shirt (Red)",15D,200,true);
 
         itemFamilyRepo.saveAndFlush(doll);
         itemFamilyRepo.saveAndFlush(shamazinBasics);
@@ -98,7 +98,7 @@ class ItemServiceTest {
     void testAddItem() {
         ItemFamily hyperY = new ItemFamily("HyperY Cloud IX",null,null,null,"HyperY");
         itemFamilyRepo.saveAndFlush(hyperY);
-        Item hyperYCloudIX = new Item(hyperY,null,"HyperY Cloud IX (Red)",100D,100,true);
+        Item hyperYCloudIX = new Item(hyperY,null,null,"HyperY Cloud IX (Red)",100D,100,true);
         itemServe.addItem(hyperYCloudIX);
 
         Item testItem = itemRepo.findById(1).isPresent()?itemRepo.findById(1).get():null;
@@ -109,7 +109,7 @@ class ItemServiceTest {
     void deleteItem() {
         ItemFamily hyperY = new ItemFamily("HyperY Cloud IX",null,null,null,"HyperY");
         itemFamilyRepo.saveAndFlush(hyperY);
-        Item hyperYCloudIX = new Item(hyperY,null,"HyperY Cloud IX (Red)",100D,100,true);
+        Item hyperYCloudIX = new Item(hyperY,null,null,"HyperY Cloud IX (Red)",100D,100,true);
         itemServe.addItem(hyperYCloudIX);
 
         itemServe.deleteItem(1);
@@ -124,7 +124,7 @@ class ItemServiceTest {
     void getItem() {
         ItemFamily hyperY = new ItemFamily("HyperY Cloud IX",null,null,null,"HyperY");
         itemFamilyRepo.saveAndFlush(hyperY);
-        Item hyperYCloudIX = new Item(hyperY,null,"HyperY Cloud IX (Red)",100D,100,true);
+        Item hyperYCloudIX = new Item(hyperY,null,null,"HyperY Cloud IX (Red)",100D,100,true);
         itemServe.addItem(hyperYCloudIX);
 
         try {
@@ -141,7 +141,7 @@ class ItemServiceTest {
     void editItem() {
         ItemFamily hyperY = new ItemFamily("HyperY Cloud IX",null,null,null,"HyperY");
         itemFamilyRepo.saveAndFlush(hyperY);
-        Item hyperYCloudIX = new Item(hyperY,null,"HyperY Cloud IX (Red)",100D,100,true);
+        Item hyperYCloudIX = new Item(hyperY,null,null,"HyperY Cloud IX (Red)",100D,100,true);
         itemServe.addItem(hyperYCloudIX);
 
         hyperYCloudIX.setPrice(120D);
@@ -163,8 +163,8 @@ class ItemServiceTest {
         ItemFamily doll = new ItemFamily("Doll XPS 13",null,null,null,"Doll");
         ItemFamily shamazinBasics = new ItemFamily("ShamazinBasics T-Shirt",null,null,null,"ShamazinBasics");
 
-        Item dollxps13 = new Item(doll,null,"Doll XPS 13 7450",1300D,50,true);
-        Item shamazinBasicsRedShirt = new Item(shamazinBasics,null,"Shamazin Basics T-Shirt (Red)",15D,200,true);
+        Item dollxps13 = new Item(doll,null,null,"Doll XPS 13 7450",1300D,50,true);
+        Item shamazinBasicsRedShirt = new Item(shamazinBasics,null,null,"Shamazin Basics T-Shirt (Red)",15D,200,true);
 
         itemFamilyRepo.saveAndFlush(doll);
         itemFamilyRepo.saveAndFlush(shamazinBasics);
