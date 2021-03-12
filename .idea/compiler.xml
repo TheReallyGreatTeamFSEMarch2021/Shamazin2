@@ -6,15 +6,18 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+        <module name="Shamazin2" />
         <module name="showItemPage" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
+      <module name="Shamazin2" target="11" />
       <module name="showItemPage" target="11" />
     </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="Shamazin2" options="-parameters" />
       <module name="showItemPage" options="-parameters" />
     </option>
   </component>
