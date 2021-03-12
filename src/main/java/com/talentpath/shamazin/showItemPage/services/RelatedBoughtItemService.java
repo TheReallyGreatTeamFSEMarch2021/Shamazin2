@@ -19,9 +19,7 @@ public class RelatedBoughtItemService {
         Set<Item> relatedBoughtItems = new HashSet<>();
         Optional<Item> boughtItem = itemRepo.findById(itemId);
 
-        if (boughtItem.isEmpty()) {
-            return null;
-        }
+        if (boughtItem.isEmpty()) { return relatedBoughtItems; }
 
         Item item = boughtItem.get();
         relatedBoughtItems.addAll(item.getRelatedBoughtItems());
