@@ -25,6 +25,10 @@ public class Item {
     @OneToMany(mappedBy="item", cascade=CascadeType.ALL)
     private List<ProductPhoto> productPhotos;
 
+
+    @OneToMany(mappedBy="item", cascade=CascadeType.ALL)
+    private List<Property> properties;
+
     @JsonIgnore
     @ManyToMany(fetch=FetchType.LAZY)
     @JoinTable(
@@ -36,6 +40,7 @@ public class Item {
     @JsonIgnore
     @ManyToMany(mappedBy="relatedBoughtItems")
     private Set<Item> relatedItems;
+
 
     @NotBlank
     private String name;
@@ -115,13 +120,22 @@ public class Item {
 
     public Item() { }
 
-    public Item(@NotBlank ItemFamily itemFamily, List<ProductPhoto> productPhotos, @NotBlank String name, @NotBlank Double price, @NotBlank Integer stockRemaining, @NotBlank Boolean isPrimeEligible) {
+    public Item(@NotBlank ItemFamily itemFamily, List<ProductPhoto> productPhotos, List<Property> properties, @NotBlank String name, @NotBlank Double price, @NotBlank Integer stockRemaining, @NotBlank Boolean isPrimeEligible) {
         this.itemFamily = itemFamily;
         this.productPhotos = productPhotos;
+        this.properties = properties;
         this.name = name;
         this.price = price;
         this.stockRemaining = stockRemaining;
         this.isPrimeEligible = isPrimeEligible;
+    }
+
+    public List<Property> getProperties() {
+        return properties;
+    }
+
+    public void setProperties(List<Property> properties) {
+        this.properties = properties;
     }
 
     @Override
@@ -129,11 +143,11 @@ public class Item {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Item item = (Item) o;
-        return itemFamily.equals(item.itemFamily) && Objects.equals(productPhotos, item.productPhotos) && name.equals(item.name) && price.equals(item.price) && stockRemaining.equals(item.stockRemaining) && isPrimeEligible.equals(item.isPrimeEligible);
+        return itemFamily.equals(item.itemFamily) && Objects.equals(properties,item.properties) && Objects.equals(productPhotos, item.productPhotos) && name.equals(item.name) && price.equals(item.price) && stockRemaining.equals(item.stockRemaining) && isPrimeEligible.equals(item.isPrimeEligible);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(itemFamily, productPhotos, name, price, stockRemaining, isPrimeEligible);
+        return Objects.hash(itemFamily, productPhotos, name, price, stockRemaining, isPrimeEligible, properties);
     }
 }
