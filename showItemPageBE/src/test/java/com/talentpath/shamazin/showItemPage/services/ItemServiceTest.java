@@ -28,6 +28,8 @@ class ItemServiceTest {
 
     @Autowired
     ItemService itemServe;
+
+    @Autowired
     ItemFamilyService itemFamilyServe;
 
     @BeforeEach

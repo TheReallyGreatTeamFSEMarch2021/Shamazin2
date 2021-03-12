@@ -14,13 +14,18 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api")
-@CrossOrigin
+@CrossOrigin(origins={"http://localhost:3000", "http://localhost:4200"}) //3000 for React apps, 4200 for Angular apps
 public class ProductPhotoController {
     @Autowired
     ItemService itemService;
 
     @Autowired
     ProductPhotoService productPhotoServ;
+
+    @GetMapping("/")
+    public String test(){
+        return "SUCCESSFULLY RAN BACKEND REST API";
+    }
 
     @GetMapping("/productPhotosForItem/{itemID}")
     public List<ProductPhoto> getProductPhotos(@PathVariable Integer itemID) throws NoSuchItemException {
