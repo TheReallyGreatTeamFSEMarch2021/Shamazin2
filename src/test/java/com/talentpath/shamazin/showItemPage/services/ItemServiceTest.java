@@ -28,6 +28,7 @@ class ItemServiceTest {
 
     @Autowired
     ItemService itemServe;
+    @Autowired
     ItemFamilyService itemFamilyServe;
 
     @BeforeEach
@@ -60,6 +61,10 @@ class ItemServiceTest {
         } catch (NoSuchItemException e) {
             fail("Exception caught during golden path test");
         }
+
+    }
+    @Test
+    void practiceTest() {
 
     }
 
