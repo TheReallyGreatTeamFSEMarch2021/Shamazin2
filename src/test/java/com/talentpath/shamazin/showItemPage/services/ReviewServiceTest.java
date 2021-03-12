@@ -62,7 +62,27 @@ class ReviewServiceTest {
     }
 
     @Test
+    @Transactional
     void getByItemFamily() {
+        ItemFamily family1 = new ItemFamily("family1", null, null, null, "brand1");
+        ItemFamily family2 = new ItemFamily("family2",null,null,null,"brand2");
+
+        Review review1 = new Review(family1, "title1", "content1", 1, 1);
+        Review review2 = new Review(family1, "title2", "content2", 2, 2);
+        Review review3 = new Review(family2, "title3", "content3", 3, 3);
+
+        itemFamilyRepo.saveAndFlush(family1);
+        itemFamilyRepo.saveAndFlush(family2);
+
+        reviewRepo.saveAndFlush(review1);
+        reviewRepo.saveAndFlush(review2);
+        reviewRepo.saveAndFlush(review3);
+
+        List<Review> reviews = service.getByItemFamily(1);
+
+        assertEquals(2, reviews.size());
+        assertEquals(review1, reviews.get(0));
+        assertEquals(review2, reviews.get(1));
     }
 
     @Test
