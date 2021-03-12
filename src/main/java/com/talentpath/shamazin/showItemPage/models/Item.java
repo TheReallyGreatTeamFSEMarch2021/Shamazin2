@@ -7,6 +7,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @Table(name="Items")
@@ -24,8 +25,22 @@ public class Item {
     @OneToMany(mappedBy="item", cascade=CascadeType.ALL)
     private List<ProductPhoto> productPhotos;
 
+
     @OneToMany(mappedBy="item", cascade=CascadeType.ALL)
     private List<Property> properties;
+
+    @JsonIgnore
+    @ManyToMany(fetch=FetchType.LAZY)
+    @JoinTable(
+            name="RelatedBoughtItems",
+            joinColumns={@JoinColumn(name="relatedItemId")},
+            inverseJoinColumns={@JoinColumn(name="relatedBoughtItemId")})
+    private Set<Item> relatedBoughtItems;
+
+    @JsonIgnore
+    @ManyToMany(mappedBy="relatedBoughtItems")
+    private Set<Item> relatedItems;
+
 
     @NotBlank
     private String name;
@@ -95,9 +110,15 @@ public class Item {
         isPrimeEligible = primeEligible;
     }
 
-    public Item() {
+    public Set<Item> getRelatedBoughtItems() { return relatedBoughtItems; }
 
-    }
+    public void setRelatedBoughtItems(Set<Item> relatedBoughtItems) { this.relatedBoughtItems = relatedBoughtItems; }
+
+    public Set<Item> getRelatedItems() { return relatedItems; }
+
+    public void setRelatedItems(Set<Item> relatedItems) { this.relatedItems = Item.this.relatedItems; }
+
+    public Item() { }
 
     public Item(@NotBlank ItemFamily itemFamily, List<ProductPhoto> productPhotos, List<Property> properties, @NotBlank String name, @NotBlank Double price, @NotBlank Integer stockRemaining, @NotBlank Boolean isPrimeEligible) {
         this.itemFamily = itemFamily;
