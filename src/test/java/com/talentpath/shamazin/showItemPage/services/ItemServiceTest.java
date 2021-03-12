@@ -156,4 +156,26 @@ class ItemServiceTest {
             fail("Exception caught during golden path test: " + e.getMessage());
         }
     }
+
+    @Test
+    @Transactional
+    void getByFamilyId() {
+        ItemFamily doll = new ItemFamily("Doll XPS 13",null,null,null,"Doll");
+        ItemFamily shamazinBasics = new ItemFamily("ShamazinBasics T-Shirt",null,null,null,"ShamazinBasics");
+
+        Item dollxps13 = new Item(doll,null,"Doll XPS 13 7450",1300D,50,true);
+        Item shamazinBasicsRedShirt = new Item(shamazinBasics,null,"Shamazin Basics T-Shirt (Red)",15D,200,true);
+
+        itemFamilyRepo.saveAndFlush(doll);
+        itemFamilyRepo.saveAndFlush(shamazinBasics);
+
+        itemRepo.saveAndFlush(dollxps13);
+        itemRepo.saveAndFlush(shamazinBasicsRedShirt);
+
+        List<Item> dollList = itemServe.findByFamilyId(1);
+        List<Item> shamazinList = itemServe.findByFamilyId(2);
+
+        assertEquals(dollxps13,dollList.get(0));
+        assertEquals(shamazinBasicsRedShirt,shamazinList.get(0));
+    }
 }
