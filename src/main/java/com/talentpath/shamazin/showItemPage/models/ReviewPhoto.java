@@ -51,6 +51,15 @@ public class ReviewPhoto {
         this.review = review;
     }
 
+    public ReviewPhoto(){
+    }
+
+    public ReviewPhoto(String photoURL, Review review, ItemFamily itemFamily){
+        this.photoURL = photoURL;
+        this.review = review;
+        this.itemFamily = itemFamily;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

@@ -1,10 +1,12 @@
 package com.talentpath.shamazin.showItemPage.services;
 
 import com.talentpath.shamazin.showItemPage.daos.ItemFamilyRepository;
+import com.talentpath.shamazin.showItemPage.daos.ReviewPhotoRepository;
 import com.talentpath.shamazin.showItemPage.daos.ReviewRepository;
 import com.talentpath.shamazin.showItemPage.exceptions.NullReviewException;
 import com.talentpath.shamazin.showItemPage.models.ItemFamily;
 import com.talentpath.shamazin.showItemPage.models.Review;
+import com.talentpath.shamazin.showItemPage.models.ReviewPhoto;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -26,6 +28,8 @@ class ReviewServiceTest {
 
     @Autowired
     ReviewRepository reviewRepo; //for adding/getting reviews
+    @Autowired
+    ReviewPhotoRepository reviewPhotoRepo;
 
     @Autowired
     ItemFamilyService itemFamilyService; //for resetting tables
@@ -63,7 +67,7 @@ class ReviewServiceTest {
 
     @Test
     @Transactional
-    void getByItemFamily() {
+    void getReviewsByItemFamily() {
         ItemFamily family1 = new ItemFamily("family1", null, null, null, "brand1");
         ItemFamily family2 = new ItemFamily("family2",null,null,null,"brand2");
 
@@ -86,7 +90,7 @@ class ReviewServiceTest {
 
     @Test
     @Transactional
-    void getById()   {
+    void getReviewById()   {
         ItemFamily family1 = new ItemFamily("family1", null, null, null, "brand1");
 
         Review review1 = new Review(family1, "title1", "content1", 1, 1);
@@ -102,6 +106,35 @@ class ReviewServiceTest {
         } catch (NullReviewException e) {
             fail("Unexpected error during ReviewService test: getById");
         }
+    }
+
+    @Test
+    @Transactional
+    void getPhotosByItemFamily(){
+        ItemFamily family1 = new ItemFamily("family1", null, null, null, "brand1");
+        ItemFamily family2 = new ItemFamily("family2",null,null,null,"brand2");
+
+        Review review1 = new Review(family1, "title1", "content1", 1, 1);
+        Review review2 = new Review(family1, "title2", "content2", 2, 2);
+        Review review3 = new Review(family2, "title3", "content3", 3, 3);
+
+        ReviewPhoto photo1 = new ReviewPhoto("url1", review1, family1);
+        ReviewPhoto photo2 = new ReviewPhoto("url2", review2, family1);
+        ReviewPhoto photo3 = new ReviewPhoto("url3", review3, family2);
+
+        itemFamilyRepo.saveAndFlush(family1);
+        itemFamilyRepo.saveAndFlush(family2);
+        reviewRepo.saveAndFlush(review1);
+        reviewRepo.saveAndFlush(review2);
+        reviewRepo.saveAndFlush(review3);
+        reviewPhotoRepo.saveAndFlush(photo1);
+        reviewPhotoRepo.saveAndFlush(photo2);
+        reviewPhotoRepo.saveAndFlush(photo3);
+
+        List<ReviewPhoto> photos = service.getPhotosByItemFamily(1);
+
+        assertEquals(2, photos.size());
+        assertEquals(photo1, photos.get(0));
 
     }
 }
