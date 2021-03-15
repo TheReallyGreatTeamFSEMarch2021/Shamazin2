@@ -14,4 +14,5 @@ import java.util.Optional;
 public interface ItemRepository extends JpaRepository<Item, Integer> {
     Optional<Item> findById(Integer itemID);
 
+    List<Item> findAllByItemFamilyId(Integer ItemFamilyId);
 }
