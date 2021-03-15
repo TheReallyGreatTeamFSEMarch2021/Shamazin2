@@ -2,6 +2,7 @@ package com.talentpath.shamazin.showItemPage.controllers;
 
 import com.talentpath.shamazin.showItemPage.exceptions.NullReviewException;
 import com.talentpath.shamazin.showItemPage.models.Review;
+import com.talentpath.shamazin.showItemPage.models.ReviewPhoto;
 import com.talentpath.shamazin.showItemPage.services.ReviewService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -30,4 +31,11 @@ public class ReviewController {
     public Review getById(@PathVariable Integer id) throws NullReviewException {
         return service.getById(id);
     }
+
+    //Review Photos
+    @GetMapping("/photos/getByItemFamily/{itemFamily}")
+    public List<ReviewPhoto> getPhotosByItemFamily(@PathVariable Integer itemFamily){
+        return service.getPhotosByItemFamily(itemFamily);
+    }
+
 }

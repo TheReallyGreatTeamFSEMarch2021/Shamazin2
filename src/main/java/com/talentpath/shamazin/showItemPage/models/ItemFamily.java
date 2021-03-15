@@ -22,6 +22,9 @@ public class ItemFamily {
     @OneToMany(mappedBy = "itemFamily", cascade=CascadeType.ALL)
     private List<Question> questions;
 
+    @OneToMany(mappedBy = "itemFamily", cascade=CascadeType.ALL)
+    private List<ReviewPhoto> reviewPhotos;
+
     @OneToMany(mappedBy="itemFamily", cascade=CascadeType.ALL)
     private List<Review> reviews;
 

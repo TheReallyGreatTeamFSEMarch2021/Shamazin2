@@ -22,6 +22,11 @@ public class ReviewPhoto {
     @NotBlank
     private Review review;
 
+    @JsonIgnore
+    @ManyToOne(fetch=FetchType.LAZY)
+    @NotBlank
+    private ItemFamily itemFamily;
+
     public Integer getId() {
         return id;
     }
