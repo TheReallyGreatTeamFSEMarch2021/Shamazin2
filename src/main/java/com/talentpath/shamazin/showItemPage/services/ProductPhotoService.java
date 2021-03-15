@@ -21,7 +21,7 @@ public class ProductPhotoService {
         try{
             productPhotos.get().get(0).getPhotoURL();
         }catch(NoSuchElementException ex){
-            System.out.println("No product photos associated with that item. " + ex);
+            System.out.println("No product photos associated with that item.  " + ex);
         }
 
         return productPhotos.get();
