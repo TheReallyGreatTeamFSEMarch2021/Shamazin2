@@ -1,13 +1,23 @@
 package com.talentpath.shamazin.showItemPage.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 
 @Entity
 @Table(name="Info")
+@JsonIgnoreProperties({"hibernateLazyInitializer","handler"})
 public class Info {
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
     private Integer id;
+
+    @JsonIgnore
+    @ManyToOne(fetch = FetchType.LAZY)
+    @NotBlank
+    private Item item;
 
     private String value;
 
@@ -16,6 +26,14 @@ public class Info {
 
     public Info(String value) {
         this.value = value;
+    }
+
+    public Item getItem() {
+        return item;
+    }
+
+    public void setItem(Item item) {
+        this.item = item;
     }
 
     public String getValue() {
@@ -34,21 +52,7 @@ public class Info {
         this.id = id;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
 
-        Info info = (Info) o;
 
-        if (!id.equals(info.id)) return false;
-        return value.equals(info.value);
-    }
 
-    @Override
-    public int hashCode() {
-        int result = id.hashCode();
-        result = 31 * result + value.hashCode();
-        return result;
-    }
 }

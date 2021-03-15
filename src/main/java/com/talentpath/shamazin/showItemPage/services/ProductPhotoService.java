@@ -21,15 +21,15 @@ public class ProductPhotoService {
         try{
             productPhotos.get().get(0).getPhotoURL();
         }catch(NoSuchElementException ex){
-            System.out.println("No product photos associated with that item. " + ex);
+            System.out.println("No product photos associated with that item.  " + ex);
         }
 
         return productPhotos.get();
 
     }
 
-    public ProductPhoto getProductPhotoByID(Integer productID) {
-        Optional<ProductPhoto> productPhoto = productPhotoRepo.findById(productID);
+    public ProductPhoto getProductPhotoByID(Integer productPhotoID) {
+        Optional<ProductPhoto> productPhoto = productPhotoRepo.findById(productPhotoID);
         try{
             productPhoto.get();
         }catch(NoSuchElementException ex){
@@ -37,4 +37,11 @@ public class ProductPhotoService {
         }
         return productPhoto.get();
     }
+
+    public ProductPhoto addProductPhoto(ProductPhoto toAdd){return productPhotoRepo.saveAndFlush(toAdd);}
+
+    public ProductPhoto editProductPhoto(ProductPhoto editedPhoto){return productPhotoRepo.saveAndFlush(editedPhoto);}
+
+    public void deleteProductPhoto(Integer productPhotoID){productPhotoRepo.deleteById(productPhotoID);}
+
 }
