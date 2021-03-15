@@ -1,6 +1,7 @@
 package com.talentpath.shamazin.showItemPage.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -9,6 +10,7 @@ import java.util.Objects;
 
 @Entity
 @Table(name="Reviews")
+@JsonIgnoreProperties({"hibernateLazyInitializer","handler"})
 public class Review {
 
     @Id
@@ -29,7 +31,7 @@ public class Review {
     private Integer starValue;
 
     @OneToMany(mappedBy="review", cascade=CascadeType.ALL)
-    private List<ReviewPhoto> reviewPhotos;
+    public List<ReviewPhoto> reviewPhotos;
 
     public Review(){
 

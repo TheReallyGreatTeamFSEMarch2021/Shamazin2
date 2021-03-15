@@ -18,7 +18,7 @@ public class ReviewService {
     public List<Review> getAllReviews() {return reviewDao.findAll();}
 
     public List<Review> getByItemFamily(Integer itemFamilyId) {
-        return reviewDao.findByItemFamilyId(itemFamilyId);
+        return reviewDao.findAllByItemFamilyId(itemFamilyId);
     }
 
     public Review getById(Integer id) throws NullReviewException {
