@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -26,6 +27,9 @@ public class Review {
     private Integer score;
 
     private Integer starValue;
+
+    @OneToMany(mappedBy="review", cascade=CascadeType.ALL)
+    private List<ReviewPhoto> reviewPhotos;
 
     public Review(){
 
