@@ -2,6 +2,7 @@ package com.talentpath.shamazin.showItemPage.services;
 
 import com.talentpath.shamazin.showItemPage.daos.ItemFamilyRepository;
 import com.talentpath.shamazin.showItemPage.daos.ReviewRepository;
+import com.talentpath.shamazin.showItemPage.exceptions.NullReviewException;
 import com.talentpath.shamazin.showItemPage.models.ItemFamily;
 import com.talentpath.shamazin.showItemPage.models.Review;
 import org.junit.jupiter.api.BeforeEach;
@@ -49,7 +50,6 @@ class ReviewServiceTest {
 
         itemFamilyRepo.saveAndFlush(family1);
         itemFamilyRepo.saveAndFlush(family2);
-
         reviewRepo.saveAndFlush(review1);
         reviewRepo.saveAndFlush(review2);
 
@@ -73,7 +73,6 @@ class ReviewServiceTest {
 
         itemFamilyRepo.saveAndFlush(family1);
         itemFamilyRepo.saveAndFlush(family2);
-
         reviewRepo.saveAndFlush(review1);
         reviewRepo.saveAndFlush(review2);
         reviewRepo.saveAndFlush(review3);
@@ -86,6 +85,23 @@ class ReviewServiceTest {
     }
 
     @Test
-    void getById() {
+    @Transactional
+    void getById()   {
+        ItemFamily family1 = new ItemFamily("family1", null, null, null, "brand1");
+
+        Review review1 = new Review(family1, "title1", "content1", 1, 1);
+        Review review2 = new Review(family1, "title2", "content2", 2, 2);
+
+        itemFamilyRepo.saveAndFlush(family1);
+        reviewRepo.saveAndFlush(review1);
+        reviewRepo.saveAndFlush(review2);
+
+        try {
+            Review r2 = service.getById(2);
+            assertEquals(review2, r2);
+        } catch (NullReviewException e) {
+            fail("Unexpected error during ReviewService test: getById");
+        }
+
     }
 }
