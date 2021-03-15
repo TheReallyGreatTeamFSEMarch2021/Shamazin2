@@ -70,6 +70,10 @@ class ItemServiceTest {
         }
 
     }
+    @Test
+    void practiceTest() {
+
+    }
 
 
     @Test
