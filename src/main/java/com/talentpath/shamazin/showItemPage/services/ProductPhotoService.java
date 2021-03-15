@@ -28,8 +28,8 @@ public class ProductPhotoService {
 
     }
 
-    public ProductPhoto getProductPhotoByID(Integer productPhotoID) {
-        Optional<ProductPhoto> productPhoto = productPhotoRepo.findById(productPhotoID);
+    public ProductPhoto getProductPhotoByID(Integer productID) {
+        Optional<ProductPhoto> productPhoto = productPhotoRepo.findById(productID);
         try{
             productPhoto.get();
         }catch(NoSuchElementException ex){
@@ -37,11 +37,4 @@ public class ProductPhotoService {
         }
         return productPhoto.get();
     }
-
-    public ProductPhoto addProductPhoto(ProductPhoto toAdd){return productPhotoRepo.saveAndFlush(toAdd);}
-
-    public ProductPhoto editProductPhoto(ProductPhoto editedPhoto){return productPhotoRepo.saveAndFlush(editedPhoto);}
-
-    public void deleteProductPhoto(Integer productPhotoID){productPhotoRepo.deleteById(productPhotoID);}
-
 }
