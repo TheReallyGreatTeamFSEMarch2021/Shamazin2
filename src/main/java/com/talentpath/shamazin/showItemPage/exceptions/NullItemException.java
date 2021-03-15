@@ -1,4 +1,11 @@
 package com.talentpath.shamazin.showItemPage.exceptions;
 
-public class NullItemException {
+public class NullItemException extends Exception {
+    public NullItemException(String message) {
+        super(message);
+    }
+
+    public NullItemException(String message, Throwable cause) {
+        super(message, cause);
+    }
 }
