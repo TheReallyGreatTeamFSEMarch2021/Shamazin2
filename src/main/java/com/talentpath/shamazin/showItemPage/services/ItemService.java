@@ -3,6 +3,7 @@ package com.talentpath.shamazin.showItemPage.services;
 
 import com.talentpath.shamazin.showItemPage.daos.ItemRepository;
 import com.talentpath.shamazin.showItemPage.exceptions.NoSuchItemException;
+import com.talentpath.shamazin.showItemPage.exceptions.NullItemException;
 import com.talentpath.shamazin.showItemPage.models.Item;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +21,8 @@ public class ItemService {
         return itemDao.findAll();
     }
 
-    public Item addItem(Item item) {
+    public Item addItem(Item item) throws NullItemException {
+        if(item == null) throw new NullItemException("Item object passed to addItem in ItemService must not be null!");
         return itemDao.saveAndFlush(item);
     }
 
