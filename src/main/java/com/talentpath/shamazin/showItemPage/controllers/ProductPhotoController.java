@@ -33,6 +33,24 @@ public class ProductPhotoController {
         return productPhotoServ.getProductPhotoByID(productID);
     }
 
+    @PostMapping("/productPhotos")
+    public ProductPhoto addProductPhoto(@RequestBody ProductPhoto productPhotoToAdd){
+        return productPhotoServ.addProductPhoto(productPhotoToAdd);
+    }
+
+    @PatchMapping("/productPhotos")
+    public ProductPhoto editProductPhoto(@RequestBody ProductPhoto productPhotoEdits){
+        return productPhotoServ.editProductPhoto(productPhotoEdits);
+    }
+
+    @DeleteMapping("/productPhotos/{productPhotoID}")
+    public void deleteProductPhoto(@PathVariable Integer productPhotoID){
+        productPhotoServ.deleteProductPhoto(productPhotoID);
+    }
+
+
+
+
 
 
 }
