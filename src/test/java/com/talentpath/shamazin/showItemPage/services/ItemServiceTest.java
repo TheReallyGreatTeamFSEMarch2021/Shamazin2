@@ -1,7 +1,7 @@
 package com.talentpath.shamazin.showItemPage.services;
 
 import com.talentpath.shamazin.showItemPage.exceptions.NoSuchItemException;
-import com.talentpath.shamazin.showItemPage.exceptions.NullItemException;
+import com.talentpath.shamazin.showItemPage.exceptions.NullArgumentException;
 import com.talentpath.shamazin.showItemPage.models.Item;
 import com.talentpath.shamazin.showItemPage.models.ItemFamily;
 import com.talentpath.shamazin.showItemPage.daos.ItemFamilyRepository;
@@ -10,15 +10,11 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.data.cassandra.AutoConfigureDataCassandra;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-
-import java.util.List;
-import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -120,7 +116,7 @@ class ItemServiceTest {
             itemServe.addItem(null);
             fail("No exception caught");
         }
-        catch(NullItemException ignored) {
+        catch(NullArgumentException ignored) {
 
         }
         catch (Exception e) {
@@ -144,6 +140,34 @@ class ItemServiceTest {
         }
         catch(Exception e) {
             fail("Exception caught during golden path test: " + e.getMessage());
+        }
+    }
+
+    @Test
+    void deleteItemWrongId() {
+        try {
+            itemServe.deleteItem(4);
+            fail("No exception caught.");
+        }
+        catch(NoSuchItemException ignored) {
+
+        }
+        catch(Exception e) {
+            fail("Wrong exception caught: " + e.getClass() + " " + e.getMessage());
+        }
+    }
+
+    @Test
+    void deleteItemNullId() {
+        try {
+            itemServe.deleteItem(null);
+            fail("No exception caught.");
+        }
+        catch(NullArgumentException ignored) {
+
+        }
+        catch(Exception e) {
+            fail("Wrong exception caught: " + e.getClass() + " " + e.getMessage());
         }
     }
 
