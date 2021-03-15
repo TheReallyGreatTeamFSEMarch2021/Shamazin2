@@ -203,6 +203,21 @@ class ItemServiceTest {
 
     @Test
     @Transactional
+    void getItemNullId() {
+        try {
+            itemServe.getItem(null);
+            fail("No exception caught.");
+        }
+        catch(NullArgumentException ignored) {
+
+        }
+        catch(Exception e) {
+            fail("Wrong exception caught: " + e.getClass() + " " + e.getMessage());
+        }
+    }
+
+    @Test
+    @Transactional
     void editItem() {
         try {
             ItemFamily hyperY = new ItemFamily("HyperY Cloud IX",null,null,null,"HyperY");

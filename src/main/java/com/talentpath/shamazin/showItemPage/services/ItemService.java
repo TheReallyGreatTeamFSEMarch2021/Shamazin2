@@ -32,7 +32,8 @@ public class ItemService {
         itemDao.deleteById(id);
     }
 
-    public Item getItem(Integer id) throws NoSuchItemException {
+    public Item getItem(Integer id) throws NoSuchItemException, NullArgumentException {
+        if(id == null) throw new NullArgumentException("Id parameter passed to getItem in ItemService must not be null!");
         Optional<Item> item = itemDao.findById(id);
         if(item.isPresent()) return item.get();
         else throw new NoSuchItemException("No item with id: " + id);

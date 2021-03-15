@@ -1,6 +1,7 @@
 package com.talentpath.shamazin.showItemPage.controllers;
 
 import com.talentpath.shamazin.showItemPage.exceptions.NoSuchItemException;
+import com.talentpath.shamazin.showItemPage.exceptions.NullArgumentException;
 import com.talentpath.shamazin.showItemPage.models.Item;
 import com.talentpath.shamazin.showItemPage.services.ItemService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +22,7 @@ public class ItemController {
     }
 
     @GetMapping("/get/{id}")
-    public Item getItemById(@PathVariable Integer id) throws NoSuchItemException {
+    public Item getItemById(@PathVariable Integer id) throws NoSuchItemException, NullArgumentException {
         return service.getItem(id);
     }
 
