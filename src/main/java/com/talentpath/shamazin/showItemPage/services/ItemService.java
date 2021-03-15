@@ -39,7 +39,9 @@ public class ItemService {
         else throw new NoSuchItemException("No item with id: " + id);
     }
 
-    public Item editItem(Item item, Integer id) {
+    public Item editItem(Item item, Integer id) throws NoSuchItemException, NullArgumentException {
+        if(item == null || id == null) throw new NullArgumentException("One or more null parameters passed to editItem in ItemService. ");
+        else if(!itemDao.existsById(id)) throw new NoSuchItemException("No item with id: " + id);
         Item current = itemDao.getOne(id);
         BeanUtils.copyProperties(item,current,"id");
         return itemDao.saveAndFlush(current);

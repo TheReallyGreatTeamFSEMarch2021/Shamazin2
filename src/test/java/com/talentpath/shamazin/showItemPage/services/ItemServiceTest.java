@@ -6,6 +6,7 @@ import com.talentpath.shamazin.showItemPage.models.Item;
 import com.talentpath.shamazin.showItemPage.models.ItemFamily;
 import com.talentpath.shamazin.showItemPage.daos.ItemFamilyRepository;
 import com.talentpath.shamazin.showItemPage.daos.ItemRepository;
+import org.h2.api.IntervalQualifier;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -234,6 +235,41 @@ class ItemServiceTest {
             assertEquals(hyperYCloudIX,item);
         } catch (Exception e) {
             fail("Exception caught during golden path test: " + e.getMessage());
+        }
+    }
+
+    @Test
+    @Transactional
+    void editItemNonexistentItem() {
+        try {
+            ItemFamily hyperY = new ItemFamily("HyperY Cloud IX",null,null,null,"HyperY");
+            itemFamilyRepo.saveAndFlush(hyperY);
+            Item hyperYCloudIX = new Item(hyperY,null,null,"HyperY Cloud IX (Red)",100D,100,true);
+//            itemServe.addItem(hyperYCloudIX);
+
+            itemServe.editItem(hyperYCloudIX,1);
+            fail("No exception caught.");
+        }
+        catch(NoSuchItemException ignored) {
+
+        }
+        catch (Exception e) {
+            fail("Wrong exception caught: " + e.getClass() + " " + e.getMessage());
+        }
+    }
+
+    @Test
+    @Transactional
+    void editItemNullItem() {
+        try {
+            itemServe.editItem(null,1);
+            fail("No exception caught.");
+        }
+        catch(NullArgumentException ignored) {
+
+        }
+        catch(Exception e) {
+            fail("Wrong exception caught: " + e.getClass() + e.getMessage());
         }
     }
 
