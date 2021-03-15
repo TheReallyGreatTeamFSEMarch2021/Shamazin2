@@ -52,9 +52,8 @@ class ItemServiceTest {
         List<Item> items = itemServe.getAllItems();
         assertEquals("Testing get all", items.get(0).getName());
         int i = 0;
-
-
     }
+
     @Test
     void addItem() {
         Item item = new Item();
@@ -68,8 +67,8 @@ class ItemServiceTest {
         } catch (NoSuchItemException e) {
             fail("Exception caught during golden path test");
         }
-
     }
+
     @Test
     void practiceTest() {
 

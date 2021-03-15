@@ -7,6 +7,7 @@ import org.hibernate.procedure.ProcedureOutputs;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import javax.transaction.Transactional;
 import java.util.*;
 import java.util.stream.Collector;
 import java.util.stream.Collectors;
@@ -37,4 +38,12 @@ public class ProductPhotoService {
         }
         return productPhoto.get();
     }
+
+    @Transactional
+    public void truncateProductPhotos() {
+        productPhotoRepo.truncateTable();
+    }
+
+
+  
 }

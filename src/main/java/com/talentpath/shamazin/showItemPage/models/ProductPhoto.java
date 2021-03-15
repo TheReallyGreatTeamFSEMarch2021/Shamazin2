@@ -22,6 +22,13 @@ public class ProductPhoto {
     @NotBlank
     private Item item;
 
+    public ProductPhoto(){ };
+
+    public ProductPhoto(String photoURL, Item relatedItem){
+        this.photoURL = photoURL;
+        this.item = relatedItem;
+    };
+
     public Integer getId() {
         return id;
     }
