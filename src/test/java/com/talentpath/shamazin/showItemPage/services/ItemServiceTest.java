@@ -1,23 +1,21 @@
 package com.talentpath.shamazin.showItemPage.services;
 
 import com.talentpath.shamazin.showItemPage.exceptions.NoSuchItemException;
+import com.talentpath.shamazin.showItemPage.exceptions.NullArgumentException;
 import com.talentpath.shamazin.showItemPage.models.Item;
 import com.talentpath.shamazin.showItemPage.models.ItemFamily;
 import com.talentpath.shamazin.showItemPage.daos.ItemFamilyRepository;
 import com.talentpath.shamazin.showItemPage.daos.ItemRepository;
+import org.h2.api.IntervalQualifier;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.data.cassandra.AutoConfigureDataCassandra;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-
-import java.util.List;
-import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -46,35 +44,33 @@ class ItemServiceTest {
     @Test
     @Transactional
     void getAllItems() {
-        Item item = new Item();
-        item.setName("Testing get all");
-        itemServe.addItem(item);
-        List<Item> items = itemServe.getAllItems();
-        assertEquals("Testing get all", items.get(0).getName());
-        int i = 0;
-
-
-    }
-    @Test
-    void addItem() {
-        Item item = new Item();
-        item.setId(1);
-        item.setName("Jesse test");
-        Integer id = itemServe.addItem(item).getId();
-        Item addedItem = null;
         try {
-            addedItem = itemServe.getItem(id);
-            assertEquals("Jesse test",addedItem.getName());
-        } catch (NoSuchItemException e) {
-            fail("Exception caught during golden path test");
+            Item item = new Item();
+            item.setName("Testing get all");
+            itemServe.addItem(item);
+            List<Item> items = itemServe.getAllItems();
+            assertEquals("Testing get all", items.get(0).getName());
+        }
+        catch(Exception e) {
+            fail("Exception caught during golden path test: " + e.getMessage());
         }
 
     }
     @Test
-    void practiceTest() {
+    void addItem() {
+        try {
+            Item item = new Item();
+            item.setId(1);
+            item.setName("Jesse test");
+            Integer id = itemServe.addItem(item).getId();
+            Item addedItem = null;
+            addedItem = itemServe.getItem(id);
+            assertEquals("Jesse test",addedItem.getName());
+        } catch (Exception e) {
+            fail("Exception caught during golden path test");
+        }
 
     }
-
 
     @Test
     @Transactional
@@ -100,64 +96,180 @@ class ItemServiceTest {
     @Test
     @Transactional
     void testAddItem() {
-        ItemFamily hyperY = new ItemFamily("HyperY Cloud IX",null,null,null,"HyperY");
-        itemFamilyRepo.saveAndFlush(hyperY);
-        Item hyperYCloudIX = new Item(hyperY,null,null,"HyperY Cloud IX (Red)",100D,100,true);
-        itemServe.addItem(hyperYCloudIX);
+        try {
+            ItemFamily hyperY = new ItemFamily("HyperY Cloud IX", null, null, null, "HyperY");
+            itemFamilyRepo.saveAndFlush(hyperY);
+            Item hyperYCloudIX = new Item(hyperY, null, null, "HyperY Cloud IX (Red)", 100D, 100, true);
+            itemServe.addItem(hyperYCloudIX);
 
-        Item testItem = itemRepo.findById(1).isPresent()?itemRepo.findById(1).get():null;
-        assertEquals(hyperYCloudIX,testItem);
+            Item testItem = itemRepo.findById(1).isPresent() ? itemRepo.findById(1).get() : null;
+            assertEquals(hyperYCloudIX, testItem);
+        }
+        catch(Exception e) {
+            fail("Exception caught during golden path test: " + e.getMessage());
+        }
+    }
+
+    @Test
+    @Transactional
+    void testAddItemNullItem() {
+        try {
+            itemServe.addItem(null);
+            fail("No exception caught");
+        }
+        catch(NullArgumentException ignored) {
+
+        }
+        catch (Exception e) {
+            fail("Wrong exception caught: " + e.getMessage());
+        }
     }
 
     @Test
     void deleteItem() {
-        ItemFamily hyperY = new ItemFamily("HyperY Cloud IX",null,null,null,"HyperY");
-        itemFamilyRepo.saveAndFlush(hyperY);
-        Item hyperYCloudIX = new Item(hyperY,null,null,"HyperY Cloud IX (Red)",100D,100,true);
-        itemServe.addItem(hyperYCloudIX);
+        try {
+            ItemFamily hyperY = new ItemFamily("HyperY Cloud IX", null, null, null, "HyperY");
+            itemFamilyRepo.saveAndFlush(hyperY);
+            Item hyperYCloudIX = new Item(hyperY, null, null, "HyperY Cloud IX (Red)", 100D, 100, true);
+            itemServe.addItem(hyperYCloudIX);
 
-        itemServe.deleteItem(1);
+            itemServe.deleteItem(1);
 
-        List<Item> items = itemRepo.findAll();
+            List<Item> items = itemRepo.findAll();
 
-        assertEquals(0,items.size());
+            assertEquals(0, items.size());
+        }
+        catch(Exception e) {
+            fail("Exception caught during golden path test: " + e.getMessage());
+        }
+    }
+
+    @Test
+    void deleteItemWrongId() {
+        try {
+            itemServe.deleteItem(4);
+            fail("No exception caught.");
+        }
+        catch(NoSuchItemException ignored) {
+
+        }
+        catch(Exception e) {
+            fail("Wrong exception caught: " + e.getClass() + " " + e.getMessage());
+        }
+    }
+
+    @Test
+    void deleteItemNullId() {
+        try {
+            itemServe.deleteItem(null);
+            fail("No exception caught.");
+        }
+        catch(NullArgumentException ignored) {
+
+        }
+        catch(Exception e) {
+            fail("Wrong exception caught: " + e.getClass() + " " + e.getMessage());
+        }
     }
 
     @Test
     @Transactional
     void getItem() {
-        ItemFamily hyperY = new ItemFamily("HyperY Cloud IX",null,null,null,"HyperY");
-        itemFamilyRepo.saveAndFlush(hyperY);
-        Item hyperYCloudIX = new Item(hyperY,null,null,"HyperY Cloud IX (Red)",100D,100,true);
-        itemServe.addItem(hyperYCloudIX);
-
         try {
+            ItemFamily hyperY = new ItemFamily("HyperY Cloud IX",null,null,null,"HyperY");
+            itemFamilyRepo.saveAndFlush(hyperY);
+            Item hyperYCloudIX = new Item(hyperY,null,null,"HyperY Cloud IX (Red)",100D,100,true);
+            itemServe.addItem(hyperYCloudIX);
             Item item = itemServe.getItem(1);
             assertEquals(hyperYCloudIX,item);
-        } catch (NoSuchItemException e) {
+        } catch (Exception e) {
             fail("Exception caught during golden path test: " + e.getMessage());
         }
+    }
 
+    @Test
+    @Transactional
+    void getItemWrongId() {
+        try {
+            itemServe.getItem(1);
+            fail("No exception caught.");
+        }
+        catch(NoSuchItemException ignored) {
+
+        }
+        catch(Exception e) {
+            fail("Wrong exception caught: " + e.getClass() + " " + e.getMessage());
+        }
+    }
+
+
+    @Test
+    @Transactional
+    void getItemNullId() {
+        try {
+            itemServe.getItem(null);
+            fail("No exception caught.");
+        }
+        catch(NullArgumentException ignored) {
+
+        }
+        catch(Exception e) {
+            fail("Wrong exception caught: " + e.getClass() + " " + e.getMessage());
+        }
     }
 
     @Test
     @Transactional
     void editItem() {
-        ItemFamily hyperY = new ItemFamily("HyperY Cloud IX",null,null,null,"HyperY");
-        itemFamilyRepo.saveAndFlush(hyperY);
-        Item hyperYCloudIX = new Item(hyperY,null,null,"HyperY Cloud IX (Red)",100D,100,true);
-        itemServe.addItem(hyperYCloudIX);
-
-        hyperYCloudIX.setPrice(120D);
-        hyperYCloudIX.setPrimeEligible(false);
-
-        itemServe.editItem(hyperYCloudIX,1);
-
         try {
+            ItemFamily hyperY = new ItemFamily("HyperY Cloud IX",null,null,null,"HyperY");
+            itemFamilyRepo.saveAndFlush(hyperY);
+            Item hyperYCloudIX = new Item(hyperY,null,null,"HyperY Cloud IX (Red)",100D,100,true);
+            itemServe.addItem(hyperYCloudIX);
+
+            hyperYCloudIX.setPrice(120D);
+            hyperYCloudIX.setPrimeEligible(false);
+
+            itemServe.editItem(hyperYCloudIX,1);
             Item item = itemServe.getItem(1);
             assertEquals(hyperYCloudIX,item);
-        } catch (NoSuchItemException e) {
+        } catch (Exception e) {
             fail("Exception caught during golden path test: " + e.getMessage());
+        }
+    }
+
+    @Test
+    @Transactional
+    void editItemNonexistentItem() {
+        try {
+            ItemFamily hyperY = new ItemFamily("HyperY Cloud IX",null,null,null,"HyperY");
+            itemFamilyRepo.saveAndFlush(hyperY);
+            Item hyperYCloudIX = new Item(hyperY,null,null,"HyperY Cloud IX (Red)",100D,100,true);
+//            itemServe.addItem(hyperYCloudIX);
+
+            itemServe.editItem(hyperYCloudIX,1);
+            fail("No exception caught.");
+        }
+        catch(NoSuchItemException ignored) {
+
+        }
+        catch (Exception e) {
+            fail("Wrong exception caught: " + e.getClass() + " " + e.getMessage());
+        }
+    }
+
+    @Test
+    @Transactional
+    void editItemNullItem() {
+        try {
+            itemServe.editItem(null,1);
+            fail("No exception caught.");
+        }
+        catch(NullArgumentException ignored) {
+
+        }
+        catch(Exception e) {
+            fail("Wrong exception caught: " + e.getClass() + e.getMessage());
         }
     }
 
