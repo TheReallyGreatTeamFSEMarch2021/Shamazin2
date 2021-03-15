@@ -2,6 +2,7 @@ package com.talentpath.shamazin.showItemPage.services;
 
 import com.talentpath.shamazin.showItemPage.daos.InfoRepository;
 import com.talentpath.shamazin.showItemPage.daos.ItemRepository;
+import com.talentpath.shamazin.showItemPage.exceptions.NoSuchInfoException;
 import com.talentpath.shamazin.showItemPage.exceptions.NoSuchItemException;
 import com.talentpath.shamazin.showItemPage.models.Info;
 import com.talentpath.shamazin.showItemPage.models.Item;
@@ -29,10 +30,10 @@ public class InfoService {
         infoDao.deleteById(id);
     }
 
-    public Info getInfo(Integer id) throws NoSuchItemException {
+    public Info getInfo(Integer id) throws NoSuchInfoException {
         Optional<Info> info = infoDao.findById(id);
         if(info.isPresent()) return info.get();
-        else throw new NoSuchItemException("No item with id: " + id);
+        else throw new NoSuchInfoException("No item with id: " + id);
     }
 
     public Info editInfo(Info info, Integer id) {
