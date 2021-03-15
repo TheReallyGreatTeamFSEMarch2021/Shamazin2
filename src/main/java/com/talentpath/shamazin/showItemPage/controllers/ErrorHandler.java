@@ -2,6 +2,7 @@ package com.talentpath.shamazin.showItemPage.controllers;
 
 import com.talentpath.shamazin.showItemPage.exceptions.NoSuchItemException;
 import com.talentpath.shamazin.showItemPage.exceptions.NoSuchItemFamilyException;
+import com.talentpath.shamazin.showItemPage.exceptions.NullArgumentException;
 import com.talentpath.shamazin.showItemPage.exceptions.NullReviewException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -29,5 +30,13 @@ public class ErrorHandler {
     public String errorMessageOnNullReviewException(NullReviewException ex, WebRequest request){
         return request.toString() + ": an error occurred: " + ex.getMessage();
     }
+
+    @ExceptionHandler(value = NullArgumentException.class)
+    @ResponseStatus(code = HttpStatus.BAD_REQUEST)
+    public String errorMessageOnNullArgumentException(NullArgumentException ex, WebRequest request){
+        return request.toString() + ": an error occurred: " + ex.getMessage();
+    }
+
+
 
 }
