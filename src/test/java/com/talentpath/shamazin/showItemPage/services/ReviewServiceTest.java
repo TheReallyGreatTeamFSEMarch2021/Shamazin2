@@ -110,6 +110,24 @@ class ReviewServiceTest {
 
     @Test
     @Transactional
+    void getReviewByIdNullId(){
+        ItemFamily family1 = new ItemFamily("family1", null, null, null, "brand1");
+
+        Review review1 = new Review(family1, "title1", "content1", 1, 1);
+
+        itemFamilyRepo.saveAndFlush(family1);
+        reviewRepo.saveAndFlush(review1);
+
+        try {
+            Review review = service.getById(2);
+            fail("Should have thrown a NullReviewException");
+        } catch (NullReviewException e) {
+            //correct exception caught, do nothing
+        }
+    }
+
+    @Test
+    @Transactional
     void getPhotosByItemFamily(){
         ItemFamily family1 = new ItemFamily("family1", null, null, null, "brand1");
         ItemFamily family2 = new ItemFamily("family2",null,null,null,"brand2");
