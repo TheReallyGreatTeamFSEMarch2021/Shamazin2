@@ -4,6 +4,7 @@ import com.talentpath.shamazin.showItemPage.daos.QuestionRepository;
 import com.talentpath.shamazin.showItemPage.models.Question;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -21,4 +22,9 @@ public class QuestionService {
     public Question editQuestion(Question edited){return questionDao.saveAndFlush(edited);}
 
     public void deleteQuestion(Integer qId){questionDao.deleteById(qId);}
+
+    @Transactional
+    public void truncateQuestionList() {
+        questionDao.reset();
+    }
 }
