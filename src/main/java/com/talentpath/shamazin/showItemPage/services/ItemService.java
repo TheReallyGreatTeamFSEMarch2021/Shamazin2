@@ -17,6 +17,9 @@ public class ItemService {
     @Autowired
     ItemRepository itemDao;
 
+    @Autowired
+    RelatedBoughtItemService relatedBoughtItemService;
+
     public List<Item> getAllItems() {
         return itemDao.findAll();
     }
@@ -29,6 +32,7 @@ public class ItemService {
     public void deleteItem(Integer id) throws NoSuchItemException, NullArgumentException {
         if(id == null) throw new NullArgumentException("Id parameter passed to deleteItem in ItemService must not be null!");
         else if(!itemDao.existsById(id)) throw new NoSuchItemException("No Item with id: " + id + " exists!");
+        relatedBoughtItemService.deleteAllRelatedBoughtItems(id);
         itemDao.deleteById(id);
     }
 

@@ -28,4 +28,23 @@ public class RelatedBoughtItemService {
         return relatedBoughtItems;
     }
 
+    public void deleteAllRelatedBoughtItems(Integer itemId) {
+        Optional<Item> boughtItem = itemRepo.findById(itemId);
+
+        if (boughtItem.isPresent()) {
+            Item item = boughtItem.get();
+            Set<Item> relatedItems = item.getRelatedItems();
+
+            for (Item relatedItem : relatedItems) {
+                relatedItem.getRelatedBoughtItems().remove(item);
+            }
+
+            Set<Item> relatedBoughtItems = item.getRelatedBoughtItems();
+            relatedBoughtItems.removeAll(relatedBoughtItems);
+
+            itemRepo.flush();
+        }
+
+    }
+
 }

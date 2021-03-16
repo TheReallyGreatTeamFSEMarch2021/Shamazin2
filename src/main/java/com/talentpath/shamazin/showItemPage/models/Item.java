@@ -116,7 +116,7 @@ public class Item {
 
     public Set<Item> getRelatedItems() { return relatedItems; }
 
-    public void setRelatedItems(Set<Item> relatedItems) { this.relatedItems = Item.this.relatedItems; }
+    public void setRelatedItems(Set<Item> relatedItems) { this.relatedItems = relatedItems; }
 
     public Item() { }
 

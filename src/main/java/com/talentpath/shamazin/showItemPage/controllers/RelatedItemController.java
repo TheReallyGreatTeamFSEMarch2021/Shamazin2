@@ -1,18 +1,16 @@
 package com.talentpath.shamazin.showItemPage.controllers;
 
 import com.talentpath.shamazin.showItemPage.models.Item;
+import com.talentpath.shamazin.showItemPage.services.ItemService;
 import com.talentpath.shamazin.showItemPage.services.RelatedBoughtItemService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
 
 @RequestMapping("/api/related")
 @RestController
-public class RelatedItemsController {
+public class RelatedItemController {
 
     @Autowired
     RelatedBoughtItemService relatedBoughtItemService;
@@ -22,4 +20,8 @@ public class RelatedItemsController {
         return relatedBoughtItemService.getAllRelatedBoughtItems(itemId);
     }
 
+    @DeleteMapping("/bought/{itemId}")
+    public void deleteRelatedBoughtItems(@PathVariable Integer itemId) {
+        relatedBoughtItemService.deleteAllRelatedBoughtItems(itemId);
+    }
 }
