@@ -41,9 +41,14 @@ public class ReviewService {
         return reviewPhotoDao.findAllByItemFamilyId(itemFamily);
     }
 
+    public List<ReviewPhoto> getAllReviewPhotos() {
+        return reviewPhotoDao.findAll();
+    }
+
     @Transactional
     public void resetReviews() {
         reviewDao.reset();
     }
+
 
 }

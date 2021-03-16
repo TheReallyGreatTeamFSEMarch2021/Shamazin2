@@ -38,4 +38,9 @@ public class ReviewController {
         return service.getPhotosByItemFamily(itemFamily);
     }
 
+    @GetMapping("/photos/getAll")
+    public List<ReviewPhoto> getAllReviewPhotos(){
+        return service.getAllReviewPhotos();
+    }
+
 }
