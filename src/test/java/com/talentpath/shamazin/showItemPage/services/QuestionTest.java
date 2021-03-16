@@ -2,6 +2,7 @@ package com.talentpath.shamazin.showItemPage.services;
 
 import com.talentpath.shamazin.showItemPage.daos.ItemFamilyRepository;
 import com.talentpath.shamazin.showItemPage.daos.QuestionRepository;
+import com.talentpath.shamazin.showItemPage.exceptions.NullQuestionException;
 import com.talentpath.shamazin.showItemPage.models.Answer;
 import com.talentpath.shamazin.showItemPage.models.ItemFamily;
 import com.talentpath.shamazin.showItemPage.models.Question;
@@ -102,7 +103,12 @@ public class QuestionTest {
         questionRepo.saveAndFlush(question1);
         questionRepo.saveAndFlush(question2);
 
-
+        try{
+            Question question = questionService.getQuestionById(2);
+            assertEquals(question2, question);
+        } catch(NullQuestionException e){
+            fail("Unexpected error during question service test: getById");
+        }
 
     }
 }
