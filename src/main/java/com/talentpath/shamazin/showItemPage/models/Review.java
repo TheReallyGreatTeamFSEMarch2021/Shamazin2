@@ -1,9 +1,11 @@
 package com.talentpath.shamazin.showItemPage.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -26,6 +28,9 @@ public class Review {
     private Integer score;
 
     private Integer starValue;
+
+    @OneToMany(mappedBy="review", cascade=CascadeType.ALL)
+    public List<ReviewPhoto> reviewPhotos;
 
     public Review(){
 

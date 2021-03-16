@@ -1,8 +1,10 @@
 package com.talentpath.shamazin.showItemPage.services;
 
+import com.talentpath.shamazin.showItemPage.daos.ReviewPhotoRepository;
 import com.talentpath.shamazin.showItemPage.daos.ReviewRepository;
 import com.talentpath.shamazin.showItemPage.exceptions.NullReviewException;
 import com.talentpath.shamazin.showItemPage.models.Review;
+import com.talentpath.shamazin.showItemPage.models.ReviewPhoto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -15,10 +17,13 @@ public class ReviewService {
     @Autowired
     ReviewRepository reviewDao;
 
+    @Autowired
+    ReviewPhotoRepository reviewPhotoDao;
+
     public List<Review> getAllReviews() {return reviewDao.findAll();}
 
     public List<Review> getByItemFamily(Integer itemFamilyId) {
-        return reviewDao.findByItemFamilyId(itemFamilyId);
+        return reviewDao.findAllByItemFamilyId(itemFamilyId);
     }
 
     public Review getById(Integer id) throws NullReviewException {
@@ -32,8 +37,18 @@ public class ReviewService {
         }
     }
 
+    public List<ReviewPhoto> getPhotosByItemFamily(Integer itemFamily) {
+        return reviewPhotoDao.findAllByItemFamilyId(itemFamily);
+    }
+
+    public List<ReviewPhoto> getAllReviewPhotos() {
+        return reviewPhotoDao.findAll();
+    }
+
     @Transactional
     public void resetReviews() {
         reviewDao.reset();
     }
+
+
 }

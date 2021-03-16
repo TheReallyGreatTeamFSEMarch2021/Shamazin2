@@ -11,7 +11,7 @@ import java.util.List;
 @Repository
 public interface ReviewRepository extends JpaRepository<Review,Integer> {
 
-    List<Review> findByItemFamilyId(Integer itemFamilyId);
+    List<Review> findAllByItemFamilyId(Integer itemFamilyId);
 
     @Modifying
     @Query(
