@@ -15,6 +15,8 @@ public class QuestionService {
 
     public List<Question> getAllQuestions() {return questionDao.findAll();}
 
+    public List<Question> getByItemFamilyId(Integer itemFamilyId){return questionDao.findByItemFamilyId(itemFamilyId);}
+
     public Question getQuestionById(Integer qId){ return questionDao.findById(qId).get(); }
 
     public Question addQuestion(Question toAdd){return questionDao.saveAndFlush(toAdd);}

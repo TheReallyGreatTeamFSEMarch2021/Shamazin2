@@ -12,6 +12,7 @@ import java.util.List;
 public interface QuestionRepository extends JpaRepository<Question, Integer> {
 
     List<Question> findByUserId(Integer userId);
+    List<Question> findByItemFamilyId(Integer itemFamilyId);
 
     @Modifying
     @Query(
