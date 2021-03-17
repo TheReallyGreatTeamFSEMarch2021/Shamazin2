@@ -53,6 +53,18 @@ public class Question {
 
     }
 
+    public Question(Integer questionId, Integer itemId, Integer userId, String question, Integer votes, LocalDate date,
+                    ItemFamily itemFamily, List<Answer> answers){
+        this.questionId = questionId;
+        this.itemId = itemId;
+        this.userId = userId;
+        this.question = question;
+        this.votes = votes;
+        this.date = date;
+        this.itemFamily = itemFamily;
+        this.answers = answers;
+    }
+
     public Question(Question that){
         this.questionId = that.questionId;
         this.itemId = that.itemId;

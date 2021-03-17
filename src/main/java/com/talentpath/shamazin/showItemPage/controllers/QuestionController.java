@@ -1,5 +1,6 @@
 package com.talentpath.shamazin.showItemPage.controllers;
 
+import com.talentpath.shamazin.showItemPage.exceptions.NullQuestionException;
 import com.talentpath.shamazin.showItemPage.models.Question;
 import com.talentpath.shamazin.showItemPage.services.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +21,7 @@ public class QuestionController {
     }
 
     @GetMapping("/{id}")
-    public Question getQuestionById(@PathVariable Integer id){return service.getQuestionById(id);}
+    public Question getQuestionById(@PathVariable Integer id) throws NullQuestionException {return service.getQuestionById(id);}
 
     @PostMapping("/")
     public Question addQuestion(@RequestBody Question toAdd){return service.addQuestion(toAdd);}

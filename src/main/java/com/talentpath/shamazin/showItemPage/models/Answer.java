@@ -25,6 +25,18 @@ public class Answer {
     @NotBlank
     private Question question;      // Associate the answer with a question
 
+    public Answer(){
+
+    }
+
+    public Answer(Integer answerId, Integer userId, String answer, LocalDate date, Question question){
+        this.answerId = answerId;
+        this.userId = userId;
+        this.answer = answer;
+        this.date = date;
+        this.question = question;
+    }
+
     public Integer getAnswerId() {
         return answerId;
     }
