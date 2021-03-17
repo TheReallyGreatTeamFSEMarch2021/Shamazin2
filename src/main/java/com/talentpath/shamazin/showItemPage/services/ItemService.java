@@ -51,4 +51,8 @@ public class ItemService {
     public List<Item> findByFamilyId(Integer familyId) {
         return itemDao.findAllByItemFamilyId(familyId);
     }
+
+    public void reset(){
+        itemDao.truncate_Item();
+    }
 }

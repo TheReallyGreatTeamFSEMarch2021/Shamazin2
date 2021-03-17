@@ -1,9 +1,6 @@
 package com.talentpath.shamazin.showItemPage.controllers;
 
-import com.talentpath.shamazin.showItemPage.exceptions.NoSuchItemException;
-import com.talentpath.shamazin.showItemPage.exceptions.NoSuchItemFamilyException;
-import com.talentpath.shamazin.showItemPage.exceptions.NullArgumentException;
-import com.talentpath.shamazin.showItemPage.exceptions.NullReviewException;
+import com.talentpath.shamazin.showItemPage.exceptions.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -37,6 +34,15 @@ public class ErrorHandler {
         return request.toString() + ": an error occurred: " + ex.getMessage();
     }
 
+    @ExceptionHandler(value = NullProductPhotoException.class)
+    @ResponseStatus(code = HttpStatus.BAD_REQUEST, reason="Product photo toAdd is null")
+    public String errorMessageOnNullProductPhotoException(NullArgumentException ex, WebRequest request){
+        return request.toString() + ": an error occurred: " + ex.getMessage();
+    }
 
-
+    @ExceptionHandler(value = NullItemException.class)
+    @ResponseStatus(code = HttpStatus.BAD_REQUEST, reason="Item is null.")
+    public String errorMessageOnNullItemException(NullItemException ex, WebRequest request){
+        return request.toString() + ": an error occurred: " + ex.getMessage();
+    }
 }

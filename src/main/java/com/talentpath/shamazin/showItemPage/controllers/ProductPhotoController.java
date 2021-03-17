@@ -3,6 +3,8 @@ package com.talentpath.shamazin.showItemPage.controllers;
 
 import com.talentpath.shamazin.showItemPage.exceptions.NoSuchItemException;
 import com.talentpath.shamazin.showItemPage.exceptions.NullArgumentException;
+import com.talentpath.shamazin.showItemPage.exceptions.NullItemException;
+import com.talentpath.shamazin.showItemPage.exceptions.NullProductPhotoException;
 import com.talentpath.shamazin.showItemPage.models.Item;
 import com.talentpath.shamazin.showItemPage.models.ProductPhoto;
 import com.talentpath.shamazin.showItemPage.services.ItemService;
@@ -11,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.constraints.Null;
 import java.util.List;
 
 @RestController
@@ -24,7 +27,7 @@ public class ProductPhotoController {
     ProductPhotoService productPhotoServ;
 
     @GetMapping("/productPhotosForItem/{itemID}")
-    public List<ProductPhoto> getProductPhotos(@PathVariable Integer itemID) throws NoSuchItemException, NullArgumentException {
+    public List<ProductPhoto> getProductPhotos(@PathVariable Integer itemID) throws NoSuchItemException, NullArgumentException, NullProductPhotoException, NullItemException {
         Item item = itemService.getItem(itemID);
         return productPhotoServ.getProductPhotosByItsItem(item);
     }
@@ -35,7 +38,7 @@ public class ProductPhotoController {
     }
 
     @PostMapping("/productPhotos")
-    public ProductPhoto addProductPhoto(@RequestBody ProductPhoto productPhotoToAdd){
+    public ProductPhoto addProductPhoto(@RequestBody ProductPhoto productPhotoToAdd)throws NullArgumentException, NullProductPhotoException {
         return productPhotoServ.addProductPhoto(productPhotoToAdd);
     }
 
