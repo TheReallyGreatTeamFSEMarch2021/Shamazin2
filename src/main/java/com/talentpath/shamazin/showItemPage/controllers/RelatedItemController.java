@@ -19,6 +19,11 @@ public class RelatedItemController {
         return relatedBoughtItemService.getAllRelatedBoughtItems(itemId);
     }
 
+    @GetMapping("/bought/{itemId}/{page}")
+    public List<Item> getRelatedBoughtItemsByPage(@PathVariable Integer itemId, @PathVariable Integer page) {
+        return relatedBoughtItemService.getAllRelatedBoughtItemsByPage(itemId, page);
+    }
+
     @DeleteMapping("/bought/{itemId}")
     public void deleteRelatedBoughtItems(@PathVariable Integer itemId) {
         relatedBoughtItemService.deleteAllRelatedBoughtItems(itemId);
