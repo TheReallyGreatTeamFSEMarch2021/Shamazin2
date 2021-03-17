@@ -86,6 +86,7 @@ public class AnswerServiceTest {
         questionRepo.saveAndFlush(question1);
         answerRepo.saveAndFlush(answer1);
         answerRepo.saveAndFlush(answer2);
+        assertEquals(2, answerService.getAllAnswers().size());
 
         try{
             Answer ans = answerService.getAnswerById(1);
@@ -99,6 +100,41 @@ public class AnswerServiceTest {
     @Transactional
     void getAnswerByQuestion(){
 
+        ItemFamily family1 = new ItemFamily("family1", null, null, null, "brand1");
+        Question question1 = new Question(1,1,1,"QuestionTest", 10,null, family1, null);
+        Question question2 = new Question(2, 2, 2, "Second Question", 55, null, family1, null);
+        itemFamilyRepo.saveAndFlush(family1);
+        questionRepo.saveAndFlush(question1);
+        questionRepo.saveAndFlush(question2);
+
+        List<ItemFamily> families = itemFamilyService.getAllItemFamilies();
+        List<Question> questions = questionService.getAllQuestions();
+
+        assertEquals(1, families.size());
+        assertEquals(2, questions.size());
+
+        Answer answer1 = new Answer(1, 1, "A", null, question1);
+        Answer answer2 = new Answer(2, 2, "B", null, question1);
+        Answer answer3 = new Answer(3,3,"C", null, question1);
+        answerRepo.saveAndFlush(answer1);
+        answerRepo.saveAndFlush(answer2);
+        answerRepo.saveAndFlush(answer3);
+        List<Answer> answers = answerService.getAllAnswers();
+        assertEquals(3, answers.size());
+
+        Answer answer4 = new Answer(4, 8, "D", null, question2);
+        Answer answer5 = new Answer(5, 2, "E", null, question2);
+        Answer answer6 = new Answer(6, 1, "F", null, question2);
+        Answer answer7 = new Answer(7, 99, "G", null, question2);
+        answerRepo.saveAndFlush(answer4);
+        answerRepo.saveAndFlush(answer5);
+        answerRepo.saveAndFlush(answer6);
+        answerRepo.saveAndFlush(answer7);
+
+        List<Answer> answersForQuestion1 = answerService.getByQuestionQuestionId(1);
+        List<Answer> answersForQuestion2 = answerService.getByQuestionQuestionId(2);
+        assertEquals(3, answersForQuestion1.size());
+        assertEquals(4, answersForQuestion2.size());
     }
 
 }

@@ -5,6 +5,7 @@ import com.talentpath.shamazin.showItemPage.exceptions.NullAnswerException;
 import com.talentpath.shamazin.showItemPage.models.Answer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -16,6 +17,12 @@ public class AnswerService {
     AnswerRepository repo;
 
     public List<Answer> getAllAnswers(){return repo.findAll();}
+
+    public List<Answer> getByQuestionQuestionId(Integer questionId) {
+        return repo.findByQuestionQuestionId(questionId);
+    }
+
+
 
     public Answer getAnswerById(Integer aId)throws NullAnswerException{
         Optional<Answer> answer = repo.findById(aId);
@@ -32,4 +39,10 @@ public class AnswerService {
     public Answer editAnswer(Answer edited){return repo.saveAndFlush(edited);}
 
     public void deleteAnswerById(Integer aId){repo.deleteById(aId);}
+
+    @Transactional
+    public void truncateAnswerList(){
+        repo.reset();
+    }
+
 }

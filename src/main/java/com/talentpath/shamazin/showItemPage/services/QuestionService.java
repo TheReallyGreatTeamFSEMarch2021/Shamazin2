@@ -19,7 +19,6 @@ public class QuestionService {
 
     public List<Question> getByItemFamilyId(Integer itemFamilyId){return questionDao.findByItemFamilyId(itemFamilyId);}
 
-
     public Question getQuestionById(Integer qId) throws NullQuestionException {
         Optional<Question> question = questionDao.findById(qId);
 
@@ -40,17 +39,4 @@ public class QuestionService {
     public void truncateQuestionList() {
         questionDao.reset();
     }
-
-    /*
-    public Review getById(Integer id) throws NullReviewException {
-        Optional<Review> review  = reviewDao.findById(id);
-
-        //check if review exists, if not throw exception
-        if(review.isPresent()){
-            return review.get();
-        }else{
-            throw new NullReviewException("No review found with id: "+id);
-        }
-    }
-     */
 }
