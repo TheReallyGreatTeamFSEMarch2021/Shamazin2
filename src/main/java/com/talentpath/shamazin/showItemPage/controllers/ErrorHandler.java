@@ -45,4 +45,17 @@ public class ErrorHandler {
     public String errorMessageOnNullItemException(NullItemException ex, WebRequest request){
         return request.toString() + ": an error occurred: " + ex.getMessage();
     }
+
+    @ExceptionHandler(value = InvalidIDException.class)
+    @ResponseStatus(code = HttpStatus.BAD_REQUEST, reason="ID is not a positive integer.")
+    public String errorMessageOnInvalidIDException(InvalidIDException ex, WebRequest request){
+        return request.toString() + ": an error occurred: " + ex.getMessage();
+    }
+
+    @ExceptionHandler(value = NoSuchProductPhotoException.class)
+    @ResponseStatus(code = HttpStatus.NOT_FOUND, reason="No Product Photo exists with that ID.")
+    public String errorMessageOnNoSuchProductPhotoException(NoSuchProductPhotoException ex, WebRequest request){
+        return request.toString() + ": an error occurred: " + ex.getMessage();
+    }
+
 }

@@ -1,6 +1,7 @@
 package com.talentpath.shamazin.showItemPage.services;
 
 import com.talentpath.shamazin.showItemPage.daos.ProductPhotoRepository;
+import com.talentpath.shamazin.showItemPage.exceptions.InvalidIDException;
 import com.talentpath.shamazin.showItemPage.exceptions.NullArgumentException;
 import com.talentpath.shamazin.showItemPage.exceptions.NullItemException;
 import com.talentpath.shamazin.showItemPage.exceptions.NullProductPhotoException;
@@ -20,9 +21,12 @@ public class ProductPhotoService {
     @Autowired
     ProductPhotoRepository productPhotoRepo;
 
-    public List<ProductPhoto> getProductPhotosByItsItem(Item item) throws NullItemException {
+    public List<ProductPhoto> getProductPhotosByItsItem(Item item) throws NullItemException, NullArgumentException {
         if(item==null){
             throw new NullItemException("Received null item in service method getProductPhotosByItsItem");
+        }
+        if(item.getId()==null || item.getItemFamily()==null || item.getName()==null || item.getPrice()==null || item.getStockRemaining()==null || item.getPrimeEligible()==null){
+            throw new NullArgumentException("In 'getProductPhotosByItsItem' method, item passed in has at least one null argument for required property.");
         }
 
         Optional<List<ProductPhoto>> productPhotos = productPhotoRepo.findByItem(item);
@@ -41,8 +45,8 @@ public class ProductPhotoService {
 //        return productPhotos.get();
     }
 
-    public ProductPhoto getProductPhotoByID(Integer productPhotoID) {
-
+    public ProductPhoto getProductPhotoByID(Integer productPhotoID) throws InvalidIDException {
+        if(productPhotoID<1)throw new InvalidIDException("productPhotoID has to be a positive integer.");
         Optional<ProductPhoto> productPhoto = productPhotoRepo.findById(productPhotoID);
         try{
             productPhoto.get();
@@ -54,7 +58,6 @@ public class ProductPhotoService {
 
     public ProductPhoto addProductPhoto(ProductPhoto toAdd) throws NullProductPhotoException, NullArgumentException{
         if(toAdd==null)throw new NullProductPhotoException("Cannot add a null product photo");
-        if(toAdd.getId()==null)throw new NullArgumentException("Cannot add a product photo with null ID");
         if(toAdd.getPhotoURL()==null)throw new NullArgumentException("Cannot add a product photo with null photoURL");
         if(toAdd.getItem()==null)throw new NullArgumentException("Cannot add a product photo with null item_id");
         return productPhotoRepo.saveAndFlush(toAdd);

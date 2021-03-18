@@ -1,10 +1,7 @@
 package com.talentpath.shamazin.showItemPage.controllers;
 
 
-import com.talentpath.shamazin.showItemPage.exceptions.NoSuchItemException;
-import com.talentpath.shamazin.showItemPage.exceptions.NullArgumentException;
-import com.talentpath.shamazin.showItemPage.exceptions.NullItemException;
-import com.talentpath.shamazin.showItemPage.exceptions.NullProductPhotoException;
+import com.talentpath.shamazin.showItemPage.exceptions.*;
 import com.talentpath.shamazin.showItemPage.models.Item;
 import com.talentpath.shamazin.showItemPage.models.ProductPhoto;
 import com.talentpath.shamazin.showItemPage.services.ItemService;
@@ -33,7 +30,7 @@ public class ProductPhotoController {
     }
 
     @GetMapping("/productPhotos/{productID}")
-    public ProductPhoto getProductPhoto(@PathVariable Integer productID){
+    public ProductPhoto getProductPhoto(@PathVariable Integer productID) throws InvalidIDException {
         return productPhotoServ.getProductPhotoByID(productID);
     }
 
