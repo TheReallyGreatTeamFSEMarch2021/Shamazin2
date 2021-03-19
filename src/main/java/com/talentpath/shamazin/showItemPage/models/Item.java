@@ -130,6 +130,14 @@ public class Item {
         this.isPrimeEligible = isPrimeEligible;
     }
 
+    public Item(@NotBlank ItemFamily itemFamily, @NotBlank String name, @NotBlank Double price, @NotBlank Integer stockRemaining, @NotBlank Boolean isPrimeEligible) {
+        this.itemFamily = itemFamily;
+        this.name = name;
+        this.price = price;
+        this.stockRemaining = stockRemaining;
+        this.isPrimeEligible = isPrimeEligible;
+    }
+
     public List<Property> getProperties() {
         return properties;
     }

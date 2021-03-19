@@ -32,4 +32,8 @@ public class ItemFamilyService {
         if(family.isPresent()) return family.get();
         else throw new NoSuchItemFamilyException("No item family with id: " + id);
     }
+
+    public ItemFamily addItemFamily(ItemFamily itemFamily){
+        return dao.saveAndFlush(itemFamily);
+    };
 }

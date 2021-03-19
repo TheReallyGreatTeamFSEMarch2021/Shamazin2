@@ -71,6 +71,11 @@ public class ItemFamily {
         this.brand = brand;
     }
 
+    public ItemFamily(@NotBlank String familyName, @NotBlank String brand) {
+        this.familyName = familyName;
+        this.brand = brand;
+    }
+
     public ItemFamily() {
 
     }

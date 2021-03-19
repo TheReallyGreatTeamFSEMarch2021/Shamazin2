@@ -30,10 +30,13 @@ public class ItemService {
     }
 
     public void deleteItem(Integer id) throws NoSuchItemException, NullArgumentException {
-        if(id == null) throw new NullArgumentException("Id parameter passed to deleteItem in ItemService must not be null!");
-        else if(!itemDao.existsById(id)) throw new NoSuchItemException("No Item with id: " + id + " exists!");
-        relatedBoughtItemService.deleteAllRelatedBoughtItems(id);
+        if(id == null){
+            throw new NullArgumentException("Id parameter passed to deleteItem in ItemService must not be null!");
+        }else if(!itemDao.existsById(id)){
+            throw new NoSuchItemException("No Item with id: " + id + " exists!");
+        }
         itemDao.deleteById(id);
+        relatedBoughtItemService.deleteAllRelatedBoughtItems(id);
     }
 
     public Item getItem(Integer id) throws NoSuchItemException, NullArgumentException {
