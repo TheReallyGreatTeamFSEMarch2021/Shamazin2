@@ -31,5 +31,9 @@ public class ItemController {
         return service.findByFamilyId(familyId);
     }
 
+    @GetMapping("/getFamilyId/{itemId}")
+    public Integer getFamilyId(@PathVariable Integer itemId) throws NoSuchItemException, NullArgumentException {
+        return service.getFamilyId(itemId);
+    }
 
 }

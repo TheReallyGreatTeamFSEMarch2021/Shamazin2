@@ -150,6 +150,7 @@ class ItemServiceTest {
 
 
     @Test
+    @Transactional
     void deleteItemWrongId() {
         try {
             itemServe.deleteItem(4);
@@ -298,5 +299,59 @@ class ItemServiceTest {
 
         assertEquals(dollxps13,dollList.get(0));
         assertEquals(shamazinBasicsRedShirt,shamazinList.get(0));
+    }
+
+    @Test
+    void getFamilyIdNullId() {
+        try{
+            itemServe.getFamilyId(null);
+            fail("No exception thrown.");
+        }
+        catch (NullArgumentException ignored) {
+
+        }
+        catch (Exception e) {
+            fail("Wrong exception caught: " + e.getClass() + " " + e.getMessage());
+        }
+
+    }
+
+    @Test
+    void getFamilyId() {
+        ItemFamily doll = new ItemFamily("Doll XPS 13",null,null,null,"Doll");
+        ItemFamily shamazinBasics = new ItemFamily("ShamazinBasics T-Shirt",null,null,null,"ShamazinBasics");
+
+        Item dollxps13 = new Item(doll,null,null,"Doll XPS 13 7450",1300D,50,true);
+        Item shamazinBasicsRedShirt = new Item(shamazinBasics,null,null,"Shamazin Basics T-Shirt (Red)",15D,200,true);
+
+        itemFamilyRepo.saveAndFlush(doll);
+        itemFamilyRepo.saveAndFlush(shamazinBasics);
+
+        itemRepo.saveAndFlush(dollxps13);
+        itemRepo.saveAndFlush(shamazinBasicsRedShirt);
+
+        try{
+            Integer one = itemServe.getFamilyId(1);
+            Integer two = itemServe.getFamilyId(2);
+            assertEquals(1,one);
+            assertEquals(2,two);
+        }
+        catch (Exception e) {
+            fail("Exception caught during golden path test: " + e.getClass() + " " + e.getMessage());
+        }
+    }
+
+    @Test
+    void getFamilyIdWrongItemId() {
+        try{
+            itemServe.getFamilyId(1);
+            fail("No exception thrown.");
+        }
+        catch(NoSuchItemException ignored) {
+
+        }
+        catch(Exception e) {
+            fail("Wrong exception caught: " + e.getClass() + " " + e.getMessage());
+        }
     }
 }
