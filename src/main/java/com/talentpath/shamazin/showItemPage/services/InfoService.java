@@ -44,4 +44,6 @@ public class InfoService {
     public List<Info> getAllByItem(Integer id) {
         return infoDao.findByitemId(id);
     }
+
+
 }
