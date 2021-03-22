@@ -9,6 +9,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.xml.bind.SchemaOutputResolver;
 import java.util.List;
 import java.util.Optional;
 
@@ -56,7 +57,9 @@ public class ItemService {
         return itemDao.findAllByItemFamilyId(familyId);
     }
 
-    public Integer getFamilyId(Integer itemId) {
-        return itemDao.getFamilyId(itemId);
+    public Integer getFamilyId(Integer itemId) throws NoSuchItemException {
+        Integer ans = itemDao.getFamilyId(itemId);
+        if(ans==null) throw new NoSuchItemException("No item with id: " + itemId + " exists!");
+        else return itemDao.getFamilyId(itemId);
     }
 }

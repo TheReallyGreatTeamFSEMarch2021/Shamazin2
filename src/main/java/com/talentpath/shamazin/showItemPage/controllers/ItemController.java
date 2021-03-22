@@ -32,7 +32,7 @@ public class ItemController {
     }
 
     @GetMapping("/getFamilyId/{itemId}")
-    public Integer getFamilyId(@PathVariable Integer itemId){
+    public Integer getFamilyId(@PathVariable Integer itemId) throws NoSuchItemException {
         return service.getFamilyId(itemId);
     }
 
