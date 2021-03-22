@@ -25,8 +25,7 @@ public class ProductPhotoController {
 
     @GetMapping("/productPhotosForItem/{itemID}")
     public List<ProductPhoto> getProductPhotos(@PathVariable Integer itemID) throws NoSuchItemException, NullArgumentException {
-        Item item = itemService.getItem(itemID);
-        return productPhotoServ.getProductPhotosByItsItem(item);
+        return productPhotoServ.getProductPhotosByItemId(itemID);
     }
 
     @GetMapping("/productPhotos/{productID}")

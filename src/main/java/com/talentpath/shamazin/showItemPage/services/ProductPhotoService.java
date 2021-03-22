@@ -1,6 +1,9 @@
 package com.talentpath.shamazin.showItemPage.services;
 
+import com.talentpath.shamazin.showItemPage.daos.ItemRepository;
 import com.talentpath.shamazin.showItemPage.daos.ProductPhotoRepository;
+import com.talentpath.shamazin.showItemPage.exceptions.NoSuchItemException;
+import com.talentpath.shamazin.showItemPage.exceptions.NullArgumentException;
 import com.talentpath.shamazin.showItemPage.models.Item;
 import com.talentpath.shamazin.showItemPage.models.ProductPhoto;
 import org.hibernate.procedure.ProcedureOutputs;
@@ -15,18 +18,8 @@ import java.util.stream.Collectors;
 public class ProductPhotoService {
     @Autowired
     ProductPhotoRepository productPhotoRepo;
-
-    public List<ProductPhoto> getProductPhotosByItsItem(Item item){
-        Optional<List<ProductPhoto>> productPhotos = productPhotoRepo.findByItem(item);
-        try{
-            productPhotos.get().get(0).getPhotoURL();
-        }catch(NoSuchElementException ex){
-            System.out.println("No product photos associated with that item.  " + ex);
-        }
-
-        return productPhotos.get();
-
-    }
+    @Autowired
+    ItemRepository itemRepo;
 
     public ProductPhoto getProductPhotoByID(Integer productPhotoID) {
         Optional<ProductPhoto> productPhoto = productPhotoRepo.findById(productPhotoID);
@@ -44,4 +37,9 @@ public class ProductPhotoService {
 
     public void deleteProductPhoto(Integer productPhotoID){productPhotoRepo.deleteById(productPhotoID);}
 
+    public List<ProductPhoto> getProductPhotosByItemId(Integer itemID) throws NoSuchItemException, NullArgumentException {
+        if(itemID==null) throw new NullArgumentException("Null itemId passed to getProductPhotosByItemId in ProductPhotoService.");
+        else if(!itemRepo.existsById(itemID)) throw new NoSuchItemException("No item with id: " + itemID + " exists!");
+        return productPhotoRepo.findAllByItemId(itemID);
+    }
 }

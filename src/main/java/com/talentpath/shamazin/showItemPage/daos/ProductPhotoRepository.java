@@ -11,4 +11,5 @@ public interface ProductPhotoRepository extends JpaRepository<ProductPhoto, Inte
     Optional<List<ProductPhoto>> findByItem(Item item);
     Optional<ProductPhoto> findById(Integer productID);
 
+    List<ProductPhoto> findAllByItemId(Integer itemID);
 }
