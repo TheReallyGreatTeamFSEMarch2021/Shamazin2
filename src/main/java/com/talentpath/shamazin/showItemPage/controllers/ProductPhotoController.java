@@ -1,8 +1,7 @@
 package com.talentpath.shamazin.showItemPage.controllers;
 
 
-import com.talentpath.shamazin.showItemPage.exceptions.NoSuchItemException;
-import com.talentpath.shamazin.showItemPage.exceptions.NullArgumentException;
+import com.talentpath.shamazin.showItemPage.exceptions.*;
 import com.talentpath.shamazin.showItemPage.models.Item;
 import com.talentpath.shamazin.showItemPage.models.ProductPhoto;
 import com.talentpath.shamazin.showItemPage.services.ItemService;
@@ -12,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 
 @RestController
 @RequestMapping("/api")
@@ -25,17 +25,16 @@ public class ProductPhotoController {
 
     @GetMapping("/productPhotosForItem/{itemID}")
     public List<ProductPhoto> getProductPhotos(@PathVariable Integer itemID) throws NoSuchItemException, NullArgumentException {
-        Item item = itemService.getItem(itemID);
-        return productPhotoServ.getProductPhotosByItsItem(item);
+        return productPhotoServ.getProductPhotosByItemId(itemID);
     }
 
     @GetMapping("/productPhotos/{productID}")
-    public ProductPhoto getProductPhoto(@PathVariable Integer productID){
+    public ProductPhoto getProductPhoto(@PathVariable Integer productID) throws NoSuchElementException, InvalidIDException {
         return productPhotoServ.getProductPhotoByID(productID);
     }
 
     @PostMapping("/productPhotos")
-    public ProductPhoto addProductPhoto(@RequestBody ProductPhoto productPhotoToAdd){
+    public ProductPhoto addProductPhoto(@RequestBody ProductPhoto productPhotoToAdd) throws NullProductPhotoException, NullArgumentException {
         return productPhotoServ.addProductPhoto(productPhotoToAdd);
     }
 

@@ -1,6 +1,8 @@
 package com.talentpath.shamazin.showItemPage.services;
 
+import com.talentpath.shamazin.showItemPage.daos.ItemRepository;
 import com.talentpath.shamazin.showItemPage.daos.ProductPhotoRepository;
+import com.talentpath.shamazin.showItemPage.exceptions.*;
 import com.talentpath.shamazin.showItemPage.models.Item;
 import com.talentpath.shamazin.showItemPage.models.ProductPhoto;
 import org.hibernate.procedure.ProcedureOutputs;
@@ -15,33 +17,30 @@ import java.util.stream.Collectors;
 public class ProductPhotoService {
     @Autowired
     ProductPhotoRepository productPhotoRepo;
+    @Autowired
+    ItemRepository itemRepo;
 
-    public List<ProductPhoto> getProductPhotosByItsItem(Item item){
-        Optional<List<ProductPhoto>> productPhotos = productPhotoRepo.findByItem(item);
-        try{
-            productPhotos.get().get(0).getPhotoURL();
-        }catch(NoSuchElementException ex){
-            System.out.println("No product photos associated with that item.  " + ex);
-        }
-
-        return productPhotos.get();
-
-    }
-
-    public ProductPhoto getProductPhotoByID(Integer productPhotoID) {
+    public ProductPhoto getProductPhotoByID(Integer productPhotoID) throws NoSuchElementException, InvalidIDException {
+        if(productPhotoID<1)throw new InvalidIDException("productPhotoID has to be a positive integer.");
         Optional<ProductPhoto> productPhoto = productPhotoRepo.findById(productPhotoID);
-        try{
-            productPhoto.get();
-        }catch(NoSuchElementException ex){
-            System.out.println(("No product photo associated with that product ID. " + ex));
-        }
-        return productPhoto.get();
+        if(productPhoto.isEmpty()) throw new NoSuchElementException("No productPhoto with id: " + productPhotoID + " exists!");
+        else return productPhoto.get();
     }
 
-    public ProductPhoto addProductPhoto(ProductPhoto toAdd){return productPhotoRepo.saveAndFlush(toAdd);}
+    public ProductPhoto addProductPhoto(ProductPhoto toAdd) throws NullProductPhotoException, NullArgumentException{
+        if(toAdd==null)throw new NullProductPhotoException("Cannot add a null product photo");
+        if(toAdd.getPhotoURL()==null)throw new NullArgumentException("Cannot add a product photo with null photoURL");
+        if(toAdd.getItem()==null)throw new NullArgumentException("Cannot add a product photo with null item_id");
+        return productPhotoRepo.saveAndFlush(toAdd);
+    }
 
     public ProductPhoto editProductPhoto(ProductPhoto editedPhoto){return productPhotoRepo.saveAndFlush(editedPhoto);}
 
     public void deleteProductPhoto(Integer productPhotoID){productPhotoRepo.deleteById(productPhotoID);}
 
+    public List<ProductPhoto> getProductPhotosByItemId(Integer itemID) throws NoSuchItemException, NullArgumentException {
+        if(itemID==null) throw new NullArgumentException("Null itemId passed to getProductPhotosByItemId in ProductPhotoService.");
+        else if(!itemRepo.existsById(itemID)) throw new NoSuchItemException("No item with id: " + itemID + " exists!");
+        return productPhotoRepo.findAllByItemId(itemID);
+    }
 }

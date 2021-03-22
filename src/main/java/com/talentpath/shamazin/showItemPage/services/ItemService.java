@@ -60,6 +60,10 @@ public class ItemService {
         return itemDao.findAllByItemFamilyId(familyId);
     }
 
+    public void reset(){
+        itemDao.truncate_Item();
+    }
+
     public Integer getFamilyId(Integer itemId) throws NoSuchItemException, NullArgumentException {
         if(itemId==null) throw new NullArgumentException("itemId passed to getFamilyId in itemService must not be null!");
         Integer ans = itemDao.getFamilyId(itemId);
