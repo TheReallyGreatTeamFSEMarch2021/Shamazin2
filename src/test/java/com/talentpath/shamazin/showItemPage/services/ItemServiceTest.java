@@ -126,23 +126,28 @@ class ItemServiceTest {
     }
 
     @Test
-    void deleteItem() {
+    @Transactional
+    void deleteItem() throws NullArgumentException{
         try {
-            ItemFamily hyperY = new ItemFamily("HyperY Cloud IX", null, null, null, "HyperY");
-            itemFamilyRepo.saveAndFlush(hyperY);
-            Item hyperYCloudIX = new Item(hyperY, null, null, "HyperY Cloud IX (Red)", 100D, 100, true);
+            ItemFamily hyperY = new ItemFamily("HyperY Cloud IX", "HyperY");
+            ItemFamily savedHyperY = itemFamilyServe.addItemFamily(hyperY);
+            Item hyperYCloudIX = new Item(savedHyperY, "HyperY Cloud IX (Red)", 100.0, 100, true);
             itemServe.addItem(hyperYCloudIX);
 
+            List<Item> items = itemServe.getAllItems();
+            //act
+            assertEquals(1, items.size());
+
             itemServe.deleteItem(1);
-
-            List<Item> items = itemRepo.findAll();
-
+            items = itemServe.getAllItems();
+            //act
             assertEquals(0, items.size());
         }
         catch(Exception e) {
-            fail("Exception caught during golden path test: " + e.getMessage());
+            fail("Exception caught during golden path test: " + e);
         }
     }
+
 
     @Test
     void deleteItemWrongId() {
