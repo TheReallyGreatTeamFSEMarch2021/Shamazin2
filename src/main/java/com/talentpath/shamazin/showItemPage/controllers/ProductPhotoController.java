@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 
 @RestController
 @RequestMapping("/api")
@@ -23,13 +24,12 @@ public class ProductPhotoController {
     ProductPhotoService productPhotoServ;
 
     @GetMapping("/productPhotosForItem/{itemID}")
-    public List<ProductPhoto> getProductPhotos(@PathVariable Integer itemID) throws NoSuchItemException, NullArgumentException, NullItemException {
-        Item item = itemService.getItem(itemID);
-        return productPhotoServ.getProductPhotosByItsItem(item);
+    public List<ProductPhoto> getProductPhotos(@PathVariable Integer itemID) throws NoSuchItemException, NullArgumentException {
+        return productPhotoServ.getProductPhotosByItemId(itemID);
     }
 
     @GetMapping("/productPhotos/{productID}")
-    public ProductPhoto getProductPhoto(@PathVariable Integer productID) throws InvalidIDException {
+    public ProductPhoto getProductPhoto(@PathVariable Integer productID) throws NoSuchElementException, InvalidIDException {
         return productPhotoServ.getProductPhotoByID(productID);
     }
 
