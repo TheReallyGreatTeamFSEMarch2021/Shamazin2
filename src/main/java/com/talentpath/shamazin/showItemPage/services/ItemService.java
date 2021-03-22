@@ -9,6 +9,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.xml.bind.SchemaOutputResolver;
 import java.util.List;
 import java.util.Optional;
 
@@ -61,5 +62,12 @@ public class ItemService {
 
     public void reset(){
         itemDao.truncate_Item();
+    }
+
+    public Integer getFamilyId(Integer itemId) throws NoSuchItemException, NullArgumentException {
+        if(itemId==null) throw new NullArgumentException("itemId passed to getFamilyId in itemService must not be null!");
+        Integer ans = itemDao.getFamilyId(itemId);
+        if(ans==null) throw new NoSuchItemException("No item with id: " + itemId + " exists!");
+        else return ans;
     }
 }
