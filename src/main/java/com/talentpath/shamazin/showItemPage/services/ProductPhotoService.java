@@ -21,14 +21,10 @@ public class ProductPhotoService {
     @Autowired
     ItemRepository itemRepo;
 
-    public ProductPhoto getProductPhotoByID(Integer productPhotoID) {
+    public ProductPhoto getProductPhotoByID(Integer productPhotoID) throws NoSuchElementException {
         Optional<ProductPhoto> productPhoto = productPhotoRepo.findById(productPhotoID);
-        try{
-            productPhoto.get();
-        }catch(NoSuchElementException ex){
-            System.out.println(("No product photo associated with that product ID. " + ex));
-        }
-        return productPhoto.get();
+        if(productPhoto.isEmpty()) throw new NoSuchElementException("No productPhoto with id: " + productPhotoID + " exists!");
+        else return productPhoto.get();
     }
 
     public ProductPhoto addProductPhoto(ProductPhoto toAdd){return productPhotoRepo.saveAndFlush(toAdd);}

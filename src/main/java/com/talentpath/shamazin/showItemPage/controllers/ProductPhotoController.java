@@ -12,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 
 @RestController
 @RequestMapping("/api")
@@ -29,7 +30,7 @@ public class ProductPhotoController {
     }
 
     @GetMapping("/productPhotos/{productID}")
-    public ProductPhoto getProductPhoto(@PathVariable Integer productID){
+    public ProductPhoto getProductPhoto(@PathVariable Integer productID) throws NoSuchElementException {
         return productPhotoServ.getProductPhotoByID(productID);
     }
 
