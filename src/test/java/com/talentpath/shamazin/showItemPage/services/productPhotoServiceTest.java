@@ -65,14 +65,14 @@ public class productPhotoServiceTest {
 //        System.out.println(item.getName());
 
         try{
-            List<ProductPhoto> productPhotos = productPhotoServ.getProductPhotosByItsItem(item);
+            List<ProductPhoto> productPhotos = productPhotoServ.getProductPhotosByItemId(1);
             assertEquals(0, productPhotos.size());
 
             //Assert
             //Adding a ProductPhoto, size should increase
             ProductPhoto productPhotoToAdd = new ProductPhoto("photo1URL", item);
             productPhotoServ.addProductPhoto(productPhotoToAdd);
-            productPhotos = productPhotoServ.getProductPhotosByItsItem(item);
+            productPhotos = productPhotoServ.getProductPhotosByItemId(1);
             assertEquals(1, productPhotos.size());
             assertEquals("photo1URL", productPhotos.get(0).getPhotoURL());
             assertEquals("Blue Addidas T-Shirt", productPhotos.get(0).getItem().getName());
@@ -132,7 +132,7 @@ public class productPhotoServiceTest {
 
     //golden path test
     @Test
-    void getProductPhotosByItsItem() throws NullArgumentException {
+    void getProductPhotosByItemId() throws NullArgumentException {
         ItemFamily toAddItemFamily = new ItemFamily();
         toAddItemFamily.setFamilyName("Security Cameras");
         toAddItemFamily.setBrand("Blink");
@@ -147,7 +147,7 @@ public class productPhotoServiceTest {
 
         Item itemAdded = itemServ.addItem(item);
         try{
-            List<ProductPhoto> productPhotos = productPhotoServ.getProductPhotosByItsItem(item);
+            List<ProductPhoto> productPhotos = productPhotoServ.getProductPhotosByItemId(3);
             assertEquals(0, productPhotos.size());
 
             ProductPhoto prodPhoto1 = new ProductPhoto("https://favrecipezaws.s3.amazonaws.com/BlinkMiniCameraPicR.jpg", itemAdded);
@@ -155,7 +155,7 @@ public class productPhotoServiceTest {
             productPhotoRepo.saveAndFlush(prodPhoto1);
             productPhotoRepo.saveAndFlush(prodPhoto2);
 
-            productPhotos = productPhotoServ.getProductPhotosByItsItem(item);
+            productPhotos = productPhotoServ.getProductPhotosByItemId(3);
             ProductPhoto productPhoto1 = productPhotos.get(0);
             ProductPhoto productPhoto2 = productPhotos.get(1);
 
@@ -170,129 +170,18 @@ public class productPhotoServiceTest {
     }
 
     @Test
-    void getProductPhotosByItsItemNullItem() throws NullItemException {
+    void getProductPhotosByItemIdNullId() throws NullItemException {
         Item item = null;
         try {
-            List<ProductPhoto> productPhotos = productPhotoServ.getProductPhotosByItsItem(item);
-            assertEquals(0, productPhotos.size());
+            List<ProductPhoto> productPhotos = productPhotoServ.getProductPhotosByItemId(null);
+            fail("No exception thrown.");
 
-        } catch (NullItemException ex) {
-            System.out.println("In getProductPhotosByItsItemNullItem, failed correctly, caught the NullItemException. " + ex.getMessage());
-        } catch (Exception ex) {
+        }
+        catch (NullArgumentException ignored) {
+
+        }
+        catch (Exception ex) {
             fail("In getProductPhotosByItsItemNullItem, should not run into another exception besides NullItemException. " + ex);
-        }
-    }
-
-    @Test
-    void getProductPhotosByItsItemNullItemID() throws NullArgumentException, NullItemException{
-        Item item = new Item();
-        ItemFamily tshirtFam = new ItemFamily();
-        item.setItemFamily(tshirtFam);
-        item.setName("Blue Tshirt");
-        item.setPrice(35.3);
-        item.setStockRemaining(20);
-        item.setPrimeEligible(false);
-
-        try{
-            productPhotoServ.getProductPhotosByItsItem(item);
-        }catch(NullArgumentException ex){
-            System.out.println("In getProductPhotosByItsItemNullItemID, failed correctly bc item had null ID, caught the NullArgumentException. " + ex.getMessage());
-        }catch(Exception ex){
-            fail("In getProductPhotosByItsItemNullItemID, should not run into another exception besides NullArgumentException. " + ex);
-        }
-    }
-
-    @Test
-    void getProductPhotosByItsItemNullItemFamily() throws NullArgumentException{
-        Item item = new Item();
-        item.setId(3);
-        item.setName("Blue Tshirt");
-        item.setPrice(35.0);
-        item.setStockRemaining(20);
-        item.setPrimeEligible(false);;
-
-        try{
-            productPhotoServ.getProductPhotosByItsItem(item);
-        }catch(NullArgumentException ex){
-            System.out.println("In getProductPhotosByItsItemNullItemFamily, failed correctly. Item has null ItemFamily, caught the NullArgumentException. " + ex.getMessage());
-        }catch(Exception ex){
-            fail("In getProductPhotosByItsItemNullItemFamily, should not run into another exception besides NullArgumentException. " + ex);
-        }
-    }
-
-    @Test
-    void getProductPhotosByItsItemNullItemName() throws NullArgumentException{
-        Item item = new Item();
-        item.setId(3);
-        ItemFamily tshirtFam = new ItemFamily();
-        item.setItemFamily(tshirtFam);
-        item.setPrice(35.0);
-        item.setStockRemaining(20);
-        item.setPrimeEligible(false);;
-
-        try{
-            productPhotoServ.getProductPhotosByItsItem(item);
-        }catch(NullArgumentException ex){
-            System.out.println("In getProductPhotosByItsItemNullItemName, failed correctly. Item has null name, caught the NullArgumentException. " + ex.getMessage());
-        }catch(Exception ex){
-            fail("In getProductPhotosByItsItemNullItemName, should not run into another exception besides NullArgumentException. " + ex);
-        }
-    }
-
-    @Test
-    void getProductPhotosByItsItemNullItemPrice() throws NullArgumentException{
-        Item item = new Item();
-        item.setId(3);
-        ItemFamily tshirtFam = new ItemFamily();
-        item.setItemFamily(tshirtFam);
-        item.setName("Blue Tshirt");
-        item.setStockRemaining(20);
-        item.setPrimeEligible(false);;
-
-        try{
-            productPhotoServ.getProductPhotosByItsItem(item);
-        }catch(NullArgumentException ex){
-            System.out.println("In getProductPhotosByItsItemNullItemPrice, failed correctly. Item has null price, caught the NullArgumentException. " + ex.getMessage());
-        }catch(Exception ex){
-            fail("In getProductPhotosByItsItemNullItemPrice, should not run into another exception besides NullArgumentException. " + ex);
-        }
-    }
-
-    @Test
-    void getProductPhotosByItsItemNullItemStockRemaining() throws NullArgumentException{
-        Item item = new Item();
-        item.setId(3);
-        ItemFamily tshirtFam = new ItemFamily();
-        item.setItemFamily(tshirtFam);
-        item.setName("Blue Tshirt");
-        item.setPrice(35.0);
-        item.setPrimeEligible(false);
-
-        try{
-            productPhotoServ.getProductPhotosByItsItem(item);
-        }catch(NullArgumentException ex){
-            System.out.println("In getProductPhotosByItsItemNullItemStockRemaining, failed correctly. Item has null stockRemaining, caught the NullArgumentException. " + ex.getMessage());
-        }catch(Exception ex){
-            fail("In getProductPhotosByItsItemNullItemStockRemaining, should not run into another exception besides NullArgumentException. " + ex);
-        }
-    }
-
-    @Test
-    void getProductPhotosByItsItemNullItemIsPrimeEligible() throws NullArgumentException{
-        Item item = new Item();
-        item.setId(3);
-        ItemFamily tshirtFam = new ItemFamily();
-        item.setItemFamily(tshirtFam);
-        item.setName("Blue Tshirt");
-        item.setPrice(35.0);
-        item.setStockRemaining(20);
-
-        try{
-            productPhotoServ.getProductPhotosByItsItem(item);
-        }catch(NullArgumentException ex){
-            System.out.println("In getProductPhotosByItsItemNullItemIsPrimeEligible, failed correctly. Item has null isPrimeEligible, caught the NullArgumentException. " + ex.getMessage());
-        }catch(Exception ex){
-            fail("In getProductPhotosByItsItemNullItemIsPrimeEligible, should not run into another exception besides NullArgumentException. " + ex);
         }
     }
 
@@ -398,10 +287,10 @@ public class productPhotoServiceTest {
             productPhotoServ.addProductPhoto(productPhotoToAdd);
             ProductPhoto productPhotoToAdd2 = new ProductPhoto("photo2URL", item);
             productPhotoServ.addProductPhoto(productPhotoToAdd2);
-            List<ProductPhoto> productPhotos = productPhotoServ.getProductPhotosByItsItem(item);
+            List<ProductPhoto> productPhotos = productPhotoServ.getProductPhotosByItemId(1);
             assertEquals(2, productPhotos.size());
             productPhotoServ.deleteProductPhoto(1);
-            productPhotos = productPhotoServ.getProductPhotosByItsItem(item);
+            productPhotos = productPhotoServ.getProductPhotosByItemId(1);
             assertEquals(1, productPhotos.size());
 
         }catch(Exception ex){
