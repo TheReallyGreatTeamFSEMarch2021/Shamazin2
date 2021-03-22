@@ -20,6 +20,9 @@ public class QuestionController {
         return service.getAllQuestions();
     }
 
+    @GetMapping("/getByItemFamily/{itemFamily}")
+    public List<Question> getQuestionByItemFamily(@PathVariable Integer itemFamily){return service.getByItemFamilyId(itemFamily);}
+
     @GetMapping("/{id}")
     public Question getQuestionById(@PathVariable Integer id) throws NullQuestionException {return service.getQuestionById(id);}
 
