@@ -57,7 +57,8 @@ public class ItemService {
         return itemDao.findAllByItemFamilyId(familyId);
     }
 
-    public Integer getFamilyId(Integer itemId) throws NoSuchItemException {
+    public Integer getFamilyId(Integer itemId) throws NoSuchItemException, NullArgumentException {
+        if(itemId==null) throw new NullArgumentException("itemId passed to getFamilyId in itemService must not be null!");
         Integer ans = itemDao.getFamilyId(itemId);
         if(ans==null) throw new NoSuchItemException("No item with id: " + itemId + " exists!");
         else return ans;
