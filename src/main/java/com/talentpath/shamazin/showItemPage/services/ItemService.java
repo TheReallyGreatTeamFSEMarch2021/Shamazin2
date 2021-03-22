@@ -60,6 +60,6 @@ public class ItemService {
     public Integer getFamilyId(Integer itemId) throws NoSuchItemException {
         Integer ans = itemDao.getFamilyId(itemId);
         if(ans==null) throw new NoSuchItemException("No item with id: " + itemId + " exists!");
-        else return itemDao.getFamilyId(itemId);
+        else return ans;
     }
 }
