@@ -55,4 +55,8 @@ public class ItemService {
     public List<Item> findByFamilyId(Integer familyId) {
         return itemDao.findAllByItemFamilyId(familyId);
     }
+
+    public Integer getFamilyId(Integer itemId) {
+        return itemDao.getFamilyId(itemId);
+    }
 }
