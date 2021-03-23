@@ -30,8 +30,10 @@ public class InfoController {
         return service.getInfo(id);
     }
 
-    @GetMapping("/getByItemId/{ItemId}")
+    @GetMapping("/getByItemId/{itemId}")
     public List<Info> getInfosByItemId(@PathVariable Integer itemId) {
+
+        System.out.println("hello");
 
         return service.getAllByItem(itemId);
     }
