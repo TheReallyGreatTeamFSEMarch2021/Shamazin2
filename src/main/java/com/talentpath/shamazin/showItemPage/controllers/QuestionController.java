@@ -1,5 +1,6 @@
 package com.talentpath.shamazin.showItemPage.controllers;
 
+import com.talentpath.shamazin.showItemPage.exceptions.NoSuchItemFamilyException;
 import com.talentpath.shamazin.showItemPage.exceptions.NullQuestionException;
 import com.talentpath.shamazin.showItemPage.models.Question;
 import com.talentpath.shamazin.showItemPage.services.QuestionService;
@@ -19,6 +20,9 @@ public class QuestionController {
     public List<Question> getAllQuestions() {
         return service.getAllQuestions();
     }
+
+    @GetMapping("/getByItemFamily/{itemFamily}")
+    public List<Question> getQuestionByItemFamily(@PathVariable Integer itemFamily) throws NoSuchItemFamilyException {return service.getByItemFamilyId(itemFamily);}
 
     @GetMapping("/{id}")
     public Question getQuestionById(@PathVariable Integer id) throws NullQuestionException {return service.getQuestionById(id);}
