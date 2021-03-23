@@ -2,6 +2,7 @@ package com.talentpath.shamazin.showItemPage.services;
 
 import com.talentpath.shamazin.showItemPage.daos.ItemFamilyRepository;
 import com.talentpath.shamazin.showItemPage.daos.QuestionRepository;
+import com.talentpath.shamazin.showItemPage.exceptions.NoSuchItemFamilyException;
 import com.talentpath.shamazin.showItemPage.exceptions.NullQuestionException;
 import com.talentpath.shamazin.showItemPage.models.Answer;
 import com.talentpath.shamazin.showItemPage.models.ItemFamily;
@@ -64,7 +65,7 @@ public class QuestionServiceTest {
 
     @Test
     @Transactional
-    void getByItemFamily(){
+    void getByItemFamily() throws NoSuchItemFamilyException {
         ItemFamily family1 = new ItemFamily("family1", null, null, null, "brand1");
         ItemFamily family2 = new ItemFamily("family2",null,null,null,"brand2");
 
