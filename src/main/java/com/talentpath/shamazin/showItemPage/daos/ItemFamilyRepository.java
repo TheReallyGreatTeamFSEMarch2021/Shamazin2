@@ -16,7 +16,7 @@ public interface ItemFamilyRepository extends JpaRepository<ItemFamily,Integer> 
             nativeQuery = true
     )
     void truncateItem_Family();
-//"
+
     @Query(
         value = "select * from item_families i where i.id = some (select item_family_id from items t where t.id = ?1)",
             nativeQuery = true
