@@ -35,5 +35,9 @@ public class ItemFamilyService {
 
     public ItemFamily addItemFamily(ItemFamily itemFamily){
         return dao.saveAndFlush(itemFamily);
-    };
+    }
+
+    public ItemFamily getItemFamilyByItemId(Integer itemId) {
+        return dao.findByItemId(itemId);
+    }
 }
