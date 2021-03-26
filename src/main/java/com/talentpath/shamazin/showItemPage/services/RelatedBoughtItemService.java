@@ -13,22 +13,24 @@ public class RelatedBoughtItemService {
     @Autowired
     ItemRepository itemRepo;
 
-    public Set<Item> getAllRelatedBoughtItems(Integer itemId) {
-        Set<Item> relatedBoughtItems = new HashSet<>();
+    public List<Item> getAllRelatedBoughtItems(Integer itemId) {
+        List<Item> relatedBoughtItems = new ArrayList<>();
         Optional<Item> boughtItem = itemRepo.findById(itemId);
 
         if (boughtItem.isEmpty()) { return relatedBoughtItems; }
 
+        Set<Item> relatedBoughtItemsSet = new HashSet<>();
         Item item = boughtItem.get();
-        relatedBoughtItems.addAll(item.getRelatedBoughtItems());
-        relatedBoughtItems.addAll(item.getRelatedItems());
+        relatedBoughtItemsSet.addAll(item.getRelatedBoughtItems());
+        relatedBoughtItemsSet.addAll(item.getRelatedItems());
 
+        relatedBoughtItems.addAll(relatedBoughtItemsSet);
+        relatedBoughtItems.sort(Comparator.comparingInt(Item::getId));
         return relatedBoughtItems;
     }
 
     public List<Item> getAllRelatedBoughtItemsByPage(Integer itemId, Integer page) {
-        List<Item> relatedBoughtItems = new ArrayList<>(getAllRelatedBoughtItems(itemId));
-        relatedBoughtItems.sort(Comparator.comparingInt(Item::getId));
+        List<Item> relatedBoughtItems = getAllRelatedBoughtItems(itemId);
         Integer total = relatedBoughtItems.size();
 
         if (total <= 7) {
