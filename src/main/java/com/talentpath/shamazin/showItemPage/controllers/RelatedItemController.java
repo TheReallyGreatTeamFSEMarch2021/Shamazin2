@@ -15,7 +15,7 @@ public class RelatedItemController {
     RelatedBoughtItemService relatedBoughtItemService;
 
     @GetMapping("/bought/{itemId}")
-    public Set<Item> getRelatedBoughtItems(@PathVariable Integer itemId) {
+    public List<Item> getRelatedBoughtItems(@PathVariable Integer itemId) {
         return relatedBoughtItemService.getAllRelatedBoughtItems(itemId);
     }
 
