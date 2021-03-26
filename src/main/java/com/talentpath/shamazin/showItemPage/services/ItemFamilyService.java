@@ -40,4 +40,9 @@ public class ItemFamilyService {
     public ItemFamily getItemFamilyByItemId(Integer itemId) {
         return dao.findByItemId(itemId);
     }
+
+    public Double getFamilyRating(Integer id) throws NoSuchItemFamilyException {
+        if(dao.existsById(id)) return dao.getFamilyRating(id);
+        else throw new NoSuchItemFamilyException("No item family with id: " + id + " exists!");
+    }
 }
