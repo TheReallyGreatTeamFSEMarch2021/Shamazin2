@@ -15,12 +15,12 @@ public class User {
     private Integer id;
 
     @NotBlank
-    @Size(max = 20)
+    @Size(min=3, max = 20)
     @Column(unique = true)
     private String username;
 
     @NotBlank
-    @Size(max = 50)
+    @Size(min=6, max = 50)
     @Email
     private String email;
 

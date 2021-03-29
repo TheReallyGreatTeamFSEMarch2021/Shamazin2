@@ -13,6 +13,7 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 
 //@Configuration //tells Spring that this is to be used once for config
@@ -72,9 +73,41 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
                         //TODO: limit this to GET
                         .antMatchers("/").permitAll()
                         .antMatchers("/api/auth/**").permitAll() //want all to see login and register pages
+                //Accessing, editing, deleting User data
                         .antMatchers("/api/userdata/**").hasRole("ADMIN") //spring sec has prefix ROLE_ by default, should be part of role name in general in Enum
+                //ItemFamily
+                        .antMatchers("/api/itemFamily/**").permitAll()
+                //Item
+                        .antMatchers("/api/item/**").permitAll()
+
+                //ProductPhotos
                         .antMatchers(HttpMethod.GET, "/api/productPhotosForItem/**", "/api/productPhotos/**").permitAll()
-                        .anyRequest().authenticated(); //all others require authenticated
+                        .antMatchers(HttpMethod.POST, "/api/productPhotos").hasRole("SELLER")
+                        .antMatchers(HttpMethod.PATCH, "/api/productPhotos").hasRole("SELLER")
+                        .antMatchers(HttpMethod.DELETE, "/api/productPhotos/**").hasRole("SELLER")
+                //Questions
+                        .antMatchers(HttpMethod.GET, "/api/question/**").permitAll()
+                        .antMatchers(HttpMethod.POST, "/api/question/").authenticated()
+                        .antMatchers(HttpMethod.PUT, "/api/question/").authenticated()
+                        .antMatchers(HttpMethod.DELETE, "/api/question/**").authenticated()
+                //Answers
+                        .antMatchers(HttpMethod.GET, "/api/answer/**").permitAll()
+                        .antMatchers(HttpMethod.POST, "/api/answer/**").authenticated()
+                        .antMatchers(HttpMethod.PUT, "/api/answer/**").authenticated()
+                        .antMatchers(HttpMethod.DELETE, "/api/answer/**").authenticated()
+                //Review
+                        .antMatchers(HttpMethod.GET, "/api/review/**").permitAll()
+                        .antMatchers(HttpMethod.POST, "/api/review/**").authenticated()
+                        .antMatchers(HttpMethod.PUT, "/api/review/**").authenticated()
+                        .antMatchers(HttpMethod.DELETE, "/api/review/**").authenticated()
+                //Related Items
+                        .antMatchers(HttpMethod.GET, "/api/related/**").permitAll()
+                .anyRequest().authenticated() //all others require authenticated
+                //before run that kind of authentication filter, should take what we have and convert it
+                //why we went process of building UserNamePasswordAuthenticationToken
+                .and().addFilterBefore(new AuthTokenFilter(), UsernamePasswordAuthenticationFilter.class);
+
+
 
     }
 }
