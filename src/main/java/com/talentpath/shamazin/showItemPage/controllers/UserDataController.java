@@ -1,6 +1,8 @@
 package com.talentpath.shamazin.showItemPage.controllers;
 
+import com.talentpath.shamazin.showItemPage.daos.RoleRepository;
 import com.talentpath.shamazin.showItemPage.daos.UserRepository;
+import com.talentpath.shamazin.showItemPage.models.Role;
 import com.talentpath.shamazin.showItemPage.models.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -13,6 +15,9 @@ import java.util.List;
 public class UserDataController {
     @Autowired
     UserRepository userRepo;
+
+    @Autowired
+    RoleRepository roleRepo;
 
     @GetMapping("/test")
     public String testUserDataController(){
@@ -46,4 +51,5 @@ public class UserDataController {
         userRepo.deleteById(id);
         return true;
     }
+
 }
