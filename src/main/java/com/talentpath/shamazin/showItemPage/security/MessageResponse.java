@@ -1,9 +1,9 @@
 package com.talentpath.shamazin.showItemPage.security;
 
 public class MessageResponse {
-    public MessageResponse(String message){this.message=message;}
-
     String message;
+
+    public MessageResponse(String message){this.message=message;}
 
     public String getMessage() {
         return message;

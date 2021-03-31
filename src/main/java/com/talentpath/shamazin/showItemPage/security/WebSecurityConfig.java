@@ -16,19 +16,12 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 
-//@Configuration //tells Spring that this is to be used once for config
+@Configuration //tells Spring that this is to be used once for config
 //going to make one instance of this and use it
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
     @Autowired
     UserDetailsServiceImpl userDetailsService;
-
-    //sets up the filter that will decode incoming jwts into
-        //the basic username/password authentication tokens
-    @Bean
-    public PasswordEncoder passwordEncoder(){
-        return new BCryptPasswordEncoder();
-    }
 
     @Autowired
     JwtAuthEntryPoint entryPoint;
@@ -39,10 +32,22 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
         return super.authenticationManagerBean();
     }
 
+    //sets up the filter that will decode incoming jwts into
+        //the basic username/password authentication tokens
+    @Bean
+    public PasswordEncoder passwordEncoder(){
+        return new BCryptPasswordEncoder();
+    }
+
+
+    @Bean
+    public AuthTokenFilter jwtFilter(){return new AuthTokenFilter();}
+
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception{
         super.configure(auth);
     }
+
 
     //jwt - json web token
     //entry point, they login, we hand them web login
@@ -69,9 +74,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
                     .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                     .authorizeRequests()
-
-                        //TODO: limit this to GET
-                        .antMatchers("/").permitAll()
+//                        .antMatchers("/").permitAll()
                         .antMatchers("/api/auth/**").permitAll() //want all to see login and register pages
                 //Accessing, editing, deleting User data
                         .antMatchers("/api/userdata/**").hasRole("ADMIN") //spring sec has prefix ROLE_ by default, should be part of role name in general in Enum
@@ -82,9 +85,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
 
                 //ProductPhotos
                         .antMatchers(HttpMethod.GET, "/api/productPhotosForItem/**", "/api/productPhotos/**").permitAll()
-                        .antMatchers(HttpMethod.POST, "/api/productPhotos").hasRole("SELLER")
-                        .antMatchers(HttpMethod.PATCH, "/api/productPhotos").hasRole("SELLER")
-                        .antMatchers(HttpMethod.DELETE, "/api/productPhotos/**").hasRole("SELLER")
+                        .antMatchers(HttpMethod.POST, "/api/productPhotos").authenticated()
+                        .antMatchers(HttpMethod.PATCH, "/api/productPhotos").authenticated()
+                        .antMatchers(HttpMethod.DELETE, "/api/productPhotos/**").authenticated()
                 //Questions
                         .antMatchers(HttpMethod.GET, "/api/question/**").permitAll()
                         .antMatchers(HttpMethod.POST, "/api/question/").authenticated()
@@ -102,10 +105,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
                         .antMatchers(HttpMethod.DELETE, "/api/review/**").authenticated()
                 //Related Items
                         .antMatchers(HttpMethod.GET, "/api/related/**").permitAll()
-                .anyRequest().authenticated() //all others require authenticated
+                .anyRequest().authenticated().and() //all others require authenticated
                 //before run that kind of authentication filter, should take what we have and convert it
                 //why we went process of building UserNamePasswordAuthenticationToken
-                .and().addFilterBefore(new AuthTokenFilter(), UsernamePasswordAuthenticationFilter.class);
+                .addFilterBefore(jwtFilter(), UsernamePasswordAuthenticationFilter.class);
 
 
 

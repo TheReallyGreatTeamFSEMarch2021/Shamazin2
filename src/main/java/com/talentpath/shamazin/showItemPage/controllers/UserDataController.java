@@ -5,6 +5,7 @@ import com.talentpath.shamazin.showItemPage.daos.UserRepository;
 import com.talentpath.shamazin.showItemPage.models.Role;
 import com.talentpath.shamazin.showItemPage.models.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Profile;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -12,6 +13,7 @@ import java.util.List;
 @RestController
 @CrossOrigin
 @RequestMapping("/api/userdata")
+@Profile({"production", "daotesting"})
 public class UserDataController {
     @Autowired
     UserRepository userRepo;

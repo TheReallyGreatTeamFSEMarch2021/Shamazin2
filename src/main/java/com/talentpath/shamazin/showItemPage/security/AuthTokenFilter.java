@@ -1,13 +1,14 @@
 package com.talentpath.shamazin.showItemPage.security;
 
+
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
@@ -19,20 +20,15 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Jws;
-
-
-
 @Component
 public class AuthTokenFilter extends OncePerRequestFilter {
 
-    @Value("shamazin.app.jwtsecret")
+    @Value("${shamazin.app.jwtsecret}")
     String secret;
 
     //need to build a user detail object up
     @Autowired
-    UserDetailsService detailsService;
+    UserDetailsServiceImpl detailsService;
 
 
 
@@ -44,19 +40,27 @@ public class AuthTokenFilter extends OncePerRequestFilter {
         if(token!=null) {
             //parser is a static method, signin key is secret password to decrypt
             Jws<Claims> claims = Jwts.parser().setSigningKey(secret).parseClaimsJws(token);
+
             String username = claims.getBody().getSubject();
             UserDetails details = detailsService.loadUserByUsername(username);
             //take in a jwt and output a decrypted token
             UsernamePasswordAuthenticationToken convertedToken =
-                    new UsernamePasswordAuthenticationToken(details, null, details.getAuthorities());
-            convertedToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+                    new UsernamePasswordAuthenticationToken(
+                            details,
+                            null,
+                            details.getAuthorities()
+                    );
+            convertedToken.setDetails(
+                    new WebAuthenticationDetailsSource().buildDetails(request)
+            );
             //will tell authentication manager that should be looking at it with username and password
 
+                SecurityContextHolder.getContext().setAuthentication(convertedToken);
 
-            SecurityContextHolder.getContext().setAuthentication(convertedToken);
+
             //trying to get somewhere without token, which is okay, as long as not an OAuth route
-        }else if(token==null){
-                SecurityContextHolder.getContext().setAuthentication(null);
+        }else{
+            SecurityContextHolder.getContext().setAuthentication(null);
         }
         //always want to make sure rest of filter chain executes
         filterChain.doFilter(request, response);

@@ -89,9 +89,4 @@ public class AuthController {
     }
 
 
-    @GetMapping("test")
-    public String testSec(){
-        return "Can reach auth controller. should be able to";
-    }
-
 }
