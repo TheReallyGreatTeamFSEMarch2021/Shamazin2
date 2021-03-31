@@ -74,7 +74,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
                     .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                     .authorizeRequests()
-//                        .antMatchers("/").permitAll()
+                        .antMatchers("/").permitAll()
                         .antMatchers("/api/auth/**").permitAll() //want all to see login and register pages
                 //Accessing, editing, deleting User data
                         .antMatchers("/api/userdata/**").hasRole("ADMIN") //spring sec has prefix ROLE_ by default, should be part of role name in general in Enum
