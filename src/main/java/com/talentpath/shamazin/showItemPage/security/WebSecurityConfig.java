@@ -105,6 +105,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
                         .antMatchers(HttpMethod.DELETE, "/api/review/**").authenticated()
                 //Related Items
                         .antMatchers(HttpMethod.GET, "/api/related/**").permitAll()
+                        .antMatchers("/api/**").permitAll()
                 .anyRequest().authenticated().and() //all others require authenticated
                 //before run that kind of authentication filter, should take what we have and convert it
                 //why we went process of building UserNamePasswordAuthenticationToken
