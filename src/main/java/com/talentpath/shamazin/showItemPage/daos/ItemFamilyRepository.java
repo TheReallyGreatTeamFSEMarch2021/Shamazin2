@@ -22,4 +22,10 @@ public interface ItemFamilyRepository extends JpaRepository<ItemFamily,Integer> 
             nativeQuery = true
     )
     ItemFamily findByItemId(Integer itemId);
+
+    @Query(
+            value="select AVG(star_value) from reviews r where r.item_family_id = ?",
+            nativeQuery = true
+    )
+    Double getFamilyRating(Integer id);
 }

@@ -31,4 +31,9 @@ public class ItemFamilyController {
         return service.getItemFamilyByItemId(id);
     }
 
+    @GetMapping("/getRating/{id}")
+    public Double getFamilyRating(@PathVariable Integer id) throws NoSuchItemFamilyException {
+        return service.getFamilyRating(id);
+    }
+
 }
